@@ -3,7 +3,6 @@ package gtf
 import (
 	"testing"
 	"bytes"
-	"html/template"
 )
 
 func AssertEqual(t *testing.T, buffer *bytes.Buffer, testString string) {
@@ -14,7 +13,7 @@ func AssertEqual(t *testing.T, buffer *bytes.Buffer, testString string) {
 }
 
 func ParseTest(buffer *bytes.Buffer, body string) {
-	tpl := template.New("test").Funcs(GtfFuncMap)
+	tpl := New("test").Funcs(GtfFuncMap)
 	tpl.Parse(body)
 	tpl.Execute(buffer, "")
 }

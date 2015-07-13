@@ -22,3 +22,7 @@ var GtfFuncMap = template.FuncMap {
 		return strings.ToLower(s)
 	},
 }
+
+func New(name string) *template.Template {
+	return template.New(name).Funcs(GtfFuncMap)
+}
