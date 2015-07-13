@@ -31,6 +31,9 @@ func TestGtfFuncMap(t *testing.T) {
 	ParseTest(&buffer, "{{ \"\" | stringDefault \"default value\" }}")
 	AssertEqual(t, &buffer, "default value")
 	
+	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringLength }}")
+	AssertEqual(t, &buffer, "27")
+	
 	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringLower }}")
 	AssertEqual(t, &buffer, "the go programming language")
 }
