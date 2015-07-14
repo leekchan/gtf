@@ -41,6 +41,9 @@ var GtfFuncMap = template.FuncMap {
 	},
 }
 
+// gtf.New is a wrapper function of template.New(http://golang.org/pkg/text/template/#New). 
+// It automatically adds the gtf functions to the template's function map 
+// and returns template.Template(http://golang.org/pkg/text/template/#Template).
 func New(name string) *template.Template {
 	return template.New(name).Funcs(GtfFuncMap)
 }
