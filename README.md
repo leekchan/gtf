@@ -31,7 +31,7 @@ func main() {
 ```
 If value is "The Go Programming Language", the output will be "TheGoProgrammingLanguage"
 
--------------
+
 
 ### stringDefault
 
@@ -40,7 +40,7 @@ If value is "The Go Programming Language", the output will be "TheGoProgrammingL
 ```
 If value is ""(the empty string), the output will be "default value"
 
--------------
+
 
 ### stringLength
 
@@ -49,7 +49,7 @@ If value is ""(the empty string), the output will be "default value"
 ```
 If value is "The Go Programming Language", the output will be 27
 
--------------
+
 
 ### stringLower
 
@@ -58,7 +58,7 @@ If value is "The Go Programming Language", the output will be 27
 ```
 If value is "The Go Programming Language", the output will be "the go programming language"
 
--------------
+
 
 ## Goal
 The main goal is implementing all built-in template filters of Django & Jinja2.
