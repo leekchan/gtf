@@ -23,7 +23,7 @@ func main() {
 }
 ```
 
-## Reference (TODO)
+## Reference
 ### stringReplace
 
 Removes all values of arg from the given string.
