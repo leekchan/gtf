@@ -26,11 +26,39 @@ func main() {
 ## Reference (TODO)
 ### stringReplace
 
+```
+{{ value | stringReplace " " }}
+```
+If value is "The Go Programming Language", the output will be "TheGoProgrammingLanguage"
+
+-------------
+
 ### stringDefault
+
+```
+{{ value | stringDefault "default value" }}
+```
+If value is ""(the empty string), the output will be "default value"
+
+-------------
 
 ### stringLength
 
+```
+{{ value | stringLength }}
+```
+If value is "The Go Programming Language", the output will be 27
+
+-------------
+
 ### stringLower
+
+```
+{{ value | stringLower }}
+```
+If value is "The Go Programming Language", the output will be "the go programming language"
+
+-------------
 
 ## Goal
 The main goal is implementing all built-in template filters of Django & Jinja2.
