@@ -26,6 +26,8 @@ func main() {
 ## Reference (TODO)
 ### stringReplace
 
+Removes all values of arg from the given string.
+
 ```
 {{ value | stringReplace " " }}
 ```
@@ -34,6 +36,8 @@ If value is "The Go Programming Language", the output will be "TheGoProgrammingL
 
 
 ### stringDefault
+
+If value is ""(the empty string), uses the given default string.
 
 ```
 {{ value | stringDefault "default value" }}
@@ -44,6 +48,8 @@ If value is ""(the empty string), the output will be "default value"
 
 ### stringLength
 
+Returns the length of the given string.
+
 ```
 {{ value | stringLength }}
 ```
@@ -52,6 +58,8 @@ If value is "The Go Programming Language", the output will be 27
 
 
 ### stringLower
+
+Converts the given string into all lowercase.
 
 ```
 {{ value | stringLower }}
