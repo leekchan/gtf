@@ -28,9 +28,9 @@ func main() {
 }
 ```
 
-### Method 2 : Adds gtf functions to the exsisting template.
+### Method 2 : Adds gtf functions to the existing template.
 
-You can also add the gtf functions to the exsisting template. Just call ".Funcs(gtf.GtfFuncMap)".
+You can also add the gtf functions to the existing template. Just call ".Funcs(gtf.GtfFuncMap)".
 
 ```Go
 package main
