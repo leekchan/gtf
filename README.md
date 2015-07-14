@@ -63,11 +63,10 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 prefix(type of input value) + function
 ```
 
-Examples:
+**Examples**
 
-```
-stringLength => The input value is string, and the function will return the length of the given value.
-```
+1. stringLength => The input value is string, and the function will return the length of the given value.
+
 
 
 
