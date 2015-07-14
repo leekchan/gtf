@@ -72,7 +72,7 @@ If value is "The Go Programming Language", the output will be "the go programmin
 
 Truncates the given string if it is longer than the specified number of characters. Truncated strings will end with a translatable ellipsis sequence ("...")
 
-*Argument:* Number of characters to truncate to
+**Argument:** Number of characters to truncate to
 
 This function also supports unicode strings.
 
@@ -80,7 +80,7 @@ This function also supports unicode strings.
 {{ value | stringTruncateChars:12 }}
 ```
 
-*Examples*
+**Examples**
 
 1. If input is {{ "The Go Programming Language" | stringTruncateChars 12 }}, the output will be "The Go Pr...". (basic string)
 1. If input is {{ "안녕하세요. 반갑습니다." | stringTruncateChars 12 }}, the output will be "안녕하세요. 반갑...". (unicode)
