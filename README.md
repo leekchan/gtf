@@ -182,6 +182,7 @@ Returns true if the value is divisible by the argument.
 ```
 
 ** Examples **
+
 1. If input is {{ 21 | intDivisibleby 3 }}, the output will be true.
 1. If input is {{ 21 | intDivisibleby 4 }}, the output will be false.
 
@@ -198,6 +199,7 @@ Returns true if the value's length is the argument, or false otherwise.
 This function also supports unicode strings.
 
 ** Examples **
+
 1. If input is {{ "Go" | stringLengthIs 2 }}, the output will be true.
 1. If input is {{ "안녕하세요. Go!" | stringLengthIs 10 }}, the output will be true.
 
@@ -239,6 +241,7 @@ Returns a plural suffix if the value is not 1. You can specify both a singular a
 ```
 
 ** Examples **
+
 1. You have 0 message{{ 0 | intPluralize "s" }} --> You have 0 messages
 2. You have 1 message{{ 1 | intPluralize "s" }} --> You have 1 message
 3. 0 cand{{ 0 | intPluralize "y,ies" }} --> 0 candies
