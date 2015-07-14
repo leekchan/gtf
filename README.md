@@ -232,6 +232,7 @@ If value is "the go programming language", the output will be "The go programmin
 Returns a plural suffix if the value is not 1. You can specify both a singular and plural suffix, separated by a comma.
 
 **Argument:** singular and plural suffix. 
+
 1. "s" --> specify only a singular suffix.
 2. "y,ies" --> specify both a singular and plural suffix.
 
