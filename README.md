@@ -104,7 +104,7 @@ Truncates the given string if it is longer than the specified number of characte
 This function also supports unicode strings.
 
 ```
-{{ value | stringTruncateChars:12 }}
+{{ value | stringTruncateChars 12 }}
 ```
 
 **Examples**
