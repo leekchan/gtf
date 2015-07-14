@@ -80,4 +80,34 @@ func TestGtfFuncMap(t *testing.T) {
 	
 	ParseTest(&buffer, "{{ 21 | intDivisibleby 4 }}")
 	AssertEqual(t, &buffer, "false")
+	
+	ParseTest(&buffer, "{{ \"Go\" | stringLengthIs 2 }}")
+	AssertEqual(t, &buffer, "true")
+	
+	ParseTest(&buffer, "{{ \"안녕하세요.\" | stringLengthIs 6 }}")
+	AssertEqual(t, &buffer, "true")
+	
+	ParseTest(&buffer, "{{ \"안녕하세요. Go!\" | stringLengthIs 10 }}")
+	AssertEqual(t, &buffer, "true")
+	
+	ParseTest(&buffer, "{{ \"       The Go Programming Language     \" | stringTrim }}")
+	AssertEqual(t, &buffer, "The Go Programming Language")
+	
+	ParseTest(&buffer, "{{ \"the go programming language\" | stringCapfirst }}")
+	AssertEqual(t, &buffer, "The go programming language")
+	
+	ParseTest(&buffer, "You have 0 message{{ 0 | intPluralize \"s\" }}")
+	AssertEqual(t, &buffer, "You have 0 messages")
+	
+	ParseTest(&buffer, "You have 1 message{{ 1 | intPluralize \"s\" }}")
+	AssertEqual(t, &buffer, "You have 1 message")
+	
+	ParseTest(&buffer, "0 cand{{ 0 | intPluralize \"y,ies\" }}")
+	AssertEqual(t, &buffer, "0 candies")
+	
+	ParseTest(&buffer, "1 cand{{ 1 | intPluralize \"y,ies\" }}")
+	AssertEqual(t, &buffer, "1 candy")
+	
+	ParseTest(&buffer, "2 cand{{ 2 | intPluralize \"y,ies\" }}")
+	AssertEqual(t, &buffer, "2 candies")
 }

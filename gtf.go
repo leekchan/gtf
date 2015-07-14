@@ -75,6 +75,40 @@ var GtfFuncMap = template.FuncMap {
 		
 		return i2 % i1 == 0
 	},
+	"stringLengthIs": func(i int, s string) bool {
+		defer recovery()
+		
+		return i == len([]rune(s))
+	},
+	"stringTrim": func(s string) string {
+		defer recovery()
+		
+		return strings.TrimSpace(s)
+	},
+	"stringCapfirst": func(s string) string {
+		defer recovery()
+		
+		return strings.ToUpper(string(s[0])) + s[1:]
+	},
+	"intPluralize": func(arg string, value int) string {
+		defer recovery()
+		
+		if !strings.Contains(arg, ",") {
+			arg = "," + arg
+		}
+		
+		bits := strings.Split(arg, ",")
+		
+		if len(bits) > 2 {
+			return ""
+		}
+		
+		if value == 1 {
+			return bits[0]
+		}
+		
+		return bits[1]
+	},
 }
 
 // gtf.New is a wrapper function of template.New(http://golang.org/pkg/text/template/#New). 

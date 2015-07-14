@@ -187,6 +187,66 @@ Returns true if the value is divisible by the argument.
 
 
 
+#### stringLengthIs
+
+Returns true if the value's length is the argument, or false otherwise.
+
+```
+{{ value | stringLengthIs 3 }}
+```
+
+This function also supports unicode strings.
+
+** Examples **
+1. If input is {{ "Go" | stringLengthIs 2 }}, the output will be true.
+1. If input is {{ "안녕하세요. Go!" | stringLengthIs 10 }}, the output will be true.
+
+
+
+#### stringTrim
+
+Strips leading and trailing whitespace. 
+
+```
+{{ value | stringTrim }}
+```
+
+
+
+#### stringCapfirst
+
+Capitalizes the first character of the given string.
+
+```
+{{ value | stringCapfirst }}
+```
+
+If value is "the go programming language", the output will be "The go programming language".
+
+
+
+#### intPluralize
+
+Returns a plural suffix if the value is not 1. You can specify both a singular and plural suffix, separated by a comma.
+
+**Argument:** singular and plural suffix. 
+1. "s" --> specify only a singular suffix.
+2. "y,ies" --> specify both a singular and plural suffix.
+
+```
+{{ value | intPluralize "s" }}
+{{ value | intPluralize "y,ies" }}
+```
+
+** Examples **
+1. You have 0 message{{ 0 | intPluralize "s" }} --> You have 0 messages
+2. You have 1 message{{ 1 | intPluralize "s" }} --> You have 1 message
+3. 0 cand{{ 0 | intPluralize "y,ies" }} --> 0 candies
+4. 1 cand{{ 1 | intPluralize "y,ies" }} --> 1 candy
+5. 2 cand{{ 2 | intPluralize "y,ies" }} --> 2 candies
+
+
+
 ## Goal
 The main goal is implementing all built-in template filters of Django & Jinja2.
 
