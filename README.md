@@ -95,7 +95,18 @@ If value is "The Go Programming Language", the output will be "the go programmin
 
 
 
-### stringTruncateChars
+### stringUpper
+
+Converts the given string into all uppercase.
+
+```
+{{ value | stringUpper }}
+```
+If value is "The Go Programming Language", the output will be "THE GO PROGRAMMING LANGUAGE".
+
+
+
+### stringTruncatechars
 
 Truncates the given string if it is longer than the specified number of characters. Truncated strings will end with a translatable ellipsis sequence ("...")
 
@@ -104,17 +115,41 @@ Truncates the given string if it is longer than the specified number of characte
 This function also supports unicode strings.
 
 ```
-{{ value | stringTruncateChars 12 }}
+{{ value | stringTruncatechars 12 }}
 ```
 
 **Examples**
 
-1. If input is {{ "The Go Programming Language" | stringTruncateChars 12 }}, the output will be "The Go Pr...". (basic string)
-1. If input is {{ "안녕하세요. 반갑습니다." | stringTruncateChars 12 }}, the output will be "안녕하세요. 반갑...". (unicode)
-1. If input is {{ "안녕하세요. The Go Programming Language" | stringTruncateChars 30 }}, the output will be "안녕하세요. The Go Programming L...". (unicode)
-1. If input is {{ "The" | stringTruncateChars 30 }}, the output will be "The". (If the length of the given string is shorter than the argument, the output will be the original string.)
-1. If input is {{ "The Go Programming Language" | stringTruncateChars 3 }}, the output will be "The". (If the argument is less than or equal to 3, the output will not contain "...".)
-1. If input is {{ "The Go" | stringTruncateChars -1 }}, the output will be "The Go". (If the argument is less than 0, the argument will be ignored.)
+1. If input is {{ "The Go Programming Language" | stringTruncatechars 12 }}, the output will be "The Go Pr...". (basic string)
+1. If input is {{ "안녕하세요. 반갑습니다." | stringTruncatechars 12 }}, the output will be "안녕하세요. 반갑...". (unicode)
+1. If input is {{ "안녕하세요. The Go Programming Language" | stringTruncatechars 30 }}, the output will be "안녕하세요. The Go Programming L...". (unicode)
+1. If input is {{ "The" | stringTruncatechars 30 }}, the output will be "The". (If the length of the given string is shorter than the argument, the output will be the original string.)
+1. If input is {{ "The Go Programming Language" | stringTruncatechars 3 }}, the output will be "The". (If the argument is less than or equal to 3, the output will not contain "...".)
+1. If input is {{ "The Go" | stringTruncatechars -1 }}, the output will be "The Go". (If the argument is less than 0, the argument will be ignored.)
+
+
+
+### stringUrlencode
+
+Escapes the given string for use in a URL.
+
+```
+{{{ value | stringUrlencode }}}
+```
+
+If value is "http://www.example.org/foo?a=b&c=d", the output will be "http%3A%2F%2Fwww.example.org%2Ffoo%3Fa%3Db%26c%3Dd".
+
+
+
+### stringWordcount
+
+Returns the number of words.
+
+```
+{{{ value | stringWordcount }}}
+```
+
+If value is "The Go Programming Language", the output will be 4.
 
 
 

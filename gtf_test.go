@@ -1,8 +1,8 @@
 package gtf
 
 import (
-	"testing"
 	"bytes"
+	"testing"
 )
 
 func AssertEqual(t *testing.T, buffer *bytes.Buffer, testString string) {
@@ -20,46 +20,58 @@ func ParseTest(buffer *bytes.Buffer, body string) {
 
 func TestGtfFuncMap(t *testing.T) {
 	var buffer bytes.Buffer
-	
+
 	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringReplace \" \" }}")
 	AssertEqual(t, &buffer, "TheGoProgrammingLanguage")
-	
+
 	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringDefault \"default value\" }}")
 	AssertEqual(t, &buffer, "The Go Programming Language")
-	
+
 	ParseTest(&buffer, "{{ \"\" | stringDefault \"default value\" }}")
 	AssertEqual(t, &buffer, "default value")
-	
+
 	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringLength }}")
 	AssertEqual(t, &buffer, "27")
-	
+
 	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringLower }}")
 	AssertEqual(t, &buffer, "the go programming language")
 	
-	ParseTest(&buffer, "{{ \"안녕하세요. 반갑습니다.\" | stringTruncateChars 12 }}")
+	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringUpper }}")
+	AssertEqual(t, &buffer, "THE GO PROGRAMMING LANGUAGE")
+
+	ParseTest(&buffer, "{{ \"안녕하세요. 반갑습니다.\" | stringTruncatechars 12 }}")
 	AssertEqual(t, &buffer, "안녕하세요. 반갑...")
-	
-	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringTruncateChars 12 }}")
+
+	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringTruncatechars 12 }}")
 	AssertEqual(t, &buffer, "The Go Pr...")
-	
-	ParseTest(&buffer, "{{ \"안녕하세요. The Go Programming Language\" | stringTruncateChars 30 }}")
+
+	ParseTest(&buffer, "{{ \"안녕하세요. The Go Programming Language\" | stringTruncatechars 30 }}")
 	AssertEqual(t, &buffer, "안녕하세요. The Go Programming L...")
-	
-	ParseTest(&buffer, "{{ \"The\" | stringTruncateChars 30 }}")
+
+	ParseTest(&buffer, "{{ \"The\" | stringTruncatechars 30 }}")
 	AssertEqual(t, &buffer, "The")
-	
-	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringTruncateChars 3 }}")
+
+	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringTruncatechars 3 }}")
 	AssertEqual(t, &buffer, "The")
-	
-	ParseTest(&buffer, "{{ \"The Go\" | stringTruncateChars 6 }}")
+
+	ParseTest(&buffer, "{{ \"The Go\" | stringTruncatechars 6 }}")
 	AssertEqual(t, &buffer, "The Go")
-	
-	ParseTest(&buffer, "{{ \"The Go\" | stringTruncateChars 30 }}")
+
+	ParseTest(&buffer, "{{ \"The Go\" | stringTruncatechars 30 }}")
 	AssertEqual(t, &buffer, "The Go")
-	
-	ParseTest(&buffer, "{{ \"The Go\" | stringTruncateChars 0 }}")
+
+	ParseTest(&buffer, "{{ \"The Go\" | stringTruncatechars 0 }}")
 	AssertEqual(t, &buffer, "")
-	
-	ParseTest(&buffer, "{{ \"The Go\" | stringTruncateChars -1 }}")
+
+	ParseTest(&buffer, "{{ \"The Go\" | stringTruncatechars -1 }}")
 	AssertEqual(t, &buffer, "The Go")
+	
+	ParseTest(&buffer, "{{ \"http://www.example.org/foo?a=b&c=d\" | stringUrlencode }}")
+	AssertEqual(t, &buffer, "http%3A%2F%2Fwww.example.org%2Ffoo%3Fa%3Db%26c%3Dd")
+	
+	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringWordcount }}")
+	AssertEqual(t, &buffer, "4")
+	
+	ParseTest(&buffer, "{{ \"      The      Go       Programming      Language        \" | stringWordcount }}")
+	AssertEqual(t, &buffer, "4")
 }

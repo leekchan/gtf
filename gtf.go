@@ -3,6 +3,7 @@ package gtf
 import (
 	"html/template"
     "strings"
+	"net/url"
 )
 
 var GtfFuncMap = template.FuncMap {
@@ -21,7 +22,10 @@ var GtfFuncMap = template.FuncMap {
 	"stringLower": func(s string) string {
 		return strings.ToLower(s)
 	},
-	"stringTruncateChars": func(n int, s string) string {
+	"stringUpper": func(s string) string {
+		return strings.ToUpper(s)
+	},
+	"stringTruncatechars": func(n int, s string) string {
 		if n < 0 {
 			return s
 		}
@@ -38,6 +42,10 @@ var GtfFuncMap = template.FuncMap {
 		}
 		
 		return string(r[:n])
+	},
+	"stringUrlencode": url.QueryEscape,
+	"stringWordcount": func(s string) int {
+		return len(strings.Fields(s))
 	},
 }
 
