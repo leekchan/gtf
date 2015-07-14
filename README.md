@@ -59,7 +59,7 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 
 
 ## Reference
-### stringReplace
+#### stringReplace
 
 Removes all values of arg from the given string.
 
@@ -70,7 +70,7 @@ If value is "The Go Programming Language", the output will be "TheGoProgrammingL
 
 
 
-### stringDefault
+#### stringDefault
 
 If value is ""(the empty string), uses the given default string.
 
@@ -81,7 +81,7 @@ If value is ""(the empty string), the output will be "default value".
 
 
 
-### stringLength
+#### stringLength
 
 Returns the length of the given string.
 
@@ -92,7 +92,7 @@ If value is "The Go Programming Language", the output will be 27.
 
 
 
-### stringLower
+#### stringLower
 
 Converts the given string into all lowercase.
 
@@ -103,7 +103,7 @@ If value is "The Go Programming Language", the output will be "the go programmin
 
 
 
-### stringUpper
+#### stringUpper
 
 Converts the given string into all uppercase.
 
@@ -114,7 +114,7 @@ If value is "The Go Programming Language", the output will be "THE GO PROGRAMMIN
 
 
 
-### stringTruncatechars
+#### stringTruncatechars
 
 Truncates the given string if it is longer than the specified number of characters. Truncated strings will end with a translatable ellipsis sequence ("...")
 
@@ -137,7 +137,7 @@ This function also supports unicode strings.
 
 
 
-### stringUrlencode
+#### stringUrlencode
 
 Escapes the given string for use in a URL.
 
@@ -149,7 +149,7 @@ If value is "http://www.example.org/foo?a=b&c=d", the output will be "http%3A%2F
 
 
 
-### stringWordcount
+#### stringWordcount
 
 Returns the number of words.
 
