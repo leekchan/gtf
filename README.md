@@ -58,6 +58,19 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 
 
 
+## Naming convention
+```
+prefix(type of input value) + function
+```
+
+Examples:
+
+```
+stringLength => The input value is string, and the function will return the length of the given value.
+```
+
+
+
 ## Reference
 #### stringReplace
 
