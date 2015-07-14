@@ -233,7 +233,7 @@ Returns a plural suffix if the value is not 1. You can specify both a singular a
 
 **Argument:** singular and plural suffix. 
 
-1. "s" --> specify only a singular suffix.
+1. "s" --> specify a singular suffix.
 2. "y,ies" --> specify both a singular and plural suffix.
 
 ```
