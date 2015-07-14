@@ -65,8 +65,8 @@ prefix(type of input value) + function
 
 **Examples**
 
-1. stringLength => The input value is string, and the function will return the length of the given value.
-
+1. stringLength => The type of the input value is string, and the function will return the length of the given value.
+1. intDivisibleby => The type of the input value is int, and the function will return true if the value is divisible by the argument.
 
 
 
@@ -154,7 +154,7 @@ This function also supports unicode strings.
 Escapes the given string for use in a URL.
 
 ```
-{{{ value | stringUrlencode }}}
+{{ value | stringUrlencode }}
 ```
 
 If value is "http://www.example.org/foo?a=b&c=d", the output will be "http%3A%2F%2Fwww.example.org%2Ffoo%3Fa%3Db%26c%3Dd".
@@ -166,10 +166,24 @@ If value is "http://www.example.org/foo?a=b&c=d", the output will be "http%3A%2F
 Returns the number of words.
 
 ```
-{{{ value | stringWordcount }}}
+{{ value | stringWordcount }}
 ```
 
 If value is "The Go Programming Language", the output will be 4.
+
+
+
+#### intDivisibleby
+
+Returns true if the value is divisible by the argument.
+
+```
+{{ value | intDivisibleby 3 }}
+```
+
+** Examples **
+1. If input is {{ 21 | intDivisibleby 3 }}, the output will be true.
+1. If input is {{ 21 | intDivisibleby 4 }}, the output will be false.
 
 
 

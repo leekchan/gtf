@@ -70,6 +70,11 @@ var GtfFuncMap = template.FuncMap {
 		
 		return len(strings.Fields(s))
 	},
+	"intDivisibleby": func(i1 int, i2 int) bool {
+		defer recovery()
+		
+		return i2 % i1 == 0
+	},
 }
 
 // gtf.New is a wrapper function of template.New(http://golang.org/pkg/text/template/#New). 

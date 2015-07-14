@@ -74,4 +74,10 @@ func TestGtfFuncMap(t *testing.T) {
 	
 	ParseTest(&buffer, "{{ \"      The      Go       Programming      Language        \" | stringWordcount }}")
 	AssertEqual(t, &buffer, "4")
+	
+	ParseTest(&buffer, "{{ 21 | intDivisibleby 3 }}")
+	AssertEqual(t, &buffer, "true")
+	
+	ParseTest(&buffer, "{{ 21 | intDivisibleby 4 }}")
+	AssertEqual(t, &buffer, "false")
 }
