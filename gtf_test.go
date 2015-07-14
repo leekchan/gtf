@@ -110,4 +110,7 @@ func TestGtfFuncMap(t *testing.T) {
 	
 	ParseTest(&buffer, "2 cand{{ 2 | intPluralize \"y,ies\" }}")
 	AssertEqual(t, &buffer, "2 candies")
+	
+	ParseTest(&buffer, "{{ 2 | intPluralize \"y,ies,s\" }}")
+	AssertEqual(t, &buffer, "")
 }
