@@ -7,7 +7,7 @@ import (
 
 func AssertEqual(t *testing.T, buffer *bytes.Buffer, testString string) {
 	if buffer.String() != testString {
-		t.Error()
+		t.Errorf("Expected %s, got %s", testString, buffer.String())
 	}
 	buffer.Reset()
 }
@@ -35,4 +35,31 @@ func TestGtfFuncMap(t *testing.T) {
 	
 	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringLower }}")
 	AssertEqual(t, &buffer, "the go programming language")
+	
+	ParseTest(&buffer, "{{ \"안녕하세요. 반갑습니다.\" | stringTruncateChars 12 }}")
+	AssertEqual(t, &buffer, "안녕하세요. 반갑...")
+	
+	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringTruncateChars 12 }}")
+	AssertEqual(t, &buffer, "The Go Pr...")
+	
+	ParseTest(&buffer, "{{ \"안녕하세요. The Go Programming Language\" | stringTruncateChars 30 }}")
+	AssertEqual(t, &buffer, "안녕하세요. The Go Programming L...")
+	
+	ParseTest(&buffer, "{{ \"The\" | stringTruncateChars 30 }}")
+	AssertEqual(t, &buffer, "The")
+	
+	ParseTest(&buffer, "{{ \"The Go Programming Language\" | stringTruncateChars 3 }}")
+	AssertEqual(t, &buffer, "The")
+	
+	ParseTest(&buffer, "{{ \"The Go\" | stringTruncateChars 6 }}")
+	AssertEqual(t, &buffer, "The Go")
+	
+	ParseTest(&buffer, "{{ \"The Go\" | stringTruncateChars 30 }}")
+	AssertEqual(t, &buffer, "The Go")
+	
+	ParseTest(&buffer, "{{ \"The Go\" | stringTruncateChars 0 }}")
+	AssertEqual(t, &buffer, "")
+	
+	ParseTest(&buffer, "{{ \"The Go\" | stringTruncateChars -1 }}")
+	AssertEqual(t, &buffer, "The Go")
 }

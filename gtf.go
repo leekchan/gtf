@@ -21,6 +21,24 @@ var GtfFuncMap = template.FuncMap {
 	"stringLower": func(s string) string {
 		return strings.ToLower(s)
 	},
+	"stringTruncateChars": func(n int, s string) string {
+		if n < 0 {
+			return s
+		}
+		
+		r := []rune(s)
+		rLength := len(r)
+		
+		if n >= rLength {
+			return s
+		}
+		
+		if n > 3 && rLength > 3 {
+			return string(r[:n-3]) + "..."
+		}
+		
+		return string(r[:n])
+	},
 }
 
 func New(name string) *template.Template {
