@@ -50,6 +50,14 @@ func main() {
 }
 ```
 
+
+## Safety
+All gtf functions have their own recovery logics. The basic behaviour of the recovery logic is silently swallowing all unexpected panics. All gtf functions would not make any panics in runtime. (**Production Ready!**)
+
+If a panic occurs inside a gtf function, the function will silently swallow the panic and return "" (empty string). If you meet any unexpected empty output, [please make an issue](https://github.com/leekchan/gtf/issues/new)! :)
+
+
+
 ## Reference
 ### stringReplace
 
