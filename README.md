@@ -4,7 +4,11 @@
 
 gtf is a useful set of Golang Template Functions. The goal of this project is implementing all built-in template filters of Django & Jinja2. 
 
-## Basic Example
+## Basic usages
+
+### Method 1 : Uses gtf.New
+
+gtf.New is a wrapper function of [template.New](http://golang.org/pkg/text/template/#New). It automatically adds the gtf functions to the template's function map and returns [template.Template](http://golang.org/pkg/text/template/#Template).
 
 ```Go
 package main
@@ -17,6 +21,28 @@ import (
 func main() {
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		tpl, _ := gtf.New("test").Parse("{{ \"The Go Programming Language\" | stringReplace \" \" }}")
+		tpl.Execute(w, "")
+	})
+    http.ListenAndServe(":8080", nil)
+}
+```
+
+### Method 2 : Adds gtf functions to the exsisting template.
+
+You can also add the gtf functions to the exsisting template. Just call ".Funcs(gtf.GtfFuncMap)".
+
+```Go
+package main
+
+import (
+	"net/http"
+	"html/template"
+	"github.com/leekchan/gtf"
+)
+
+func main() {
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		tpl, _ := template.New("test").Funcs(gtf.GtfFuncMap).Parse("{{ \"The Go Programming Language\" | stringReplace \" \" }}")
 		tpl.Execute(w, "")
 	})
     http.ListenAndServe(":8080", nil)
