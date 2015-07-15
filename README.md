@@ -308,7 +308,13 @@ Centers the given string in a field of a given width. This function also support
 
 
 ## Goal
-The main goal is implementing all built-in template filters of Django & Jinja2.
+The first goal is implementing all built-in template filters of Django & Jinja2.
 
 * [Django | Built-in filter reference](https://docs.djangoproject.com/en/1.8/ref/templates/builtins/#built-in-filter-reference)
 * [Jinja2 | List of Builtin Filters](http://jinja.pocoo.org/docs/dev/templates/#builtin-filters)
+
+The final goal is building a ultimate set which contains hundreds of useful template functions.
+
+
+## Contributing
+I love pull requests :) You can add any useful template functions by submitting a pull request!
