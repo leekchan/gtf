@@ -109,6 +109,50 @@ var GtfFuncMap = template.FuncMap {
 		
 		return bits[1]
 	},
+	"boolYesno": func(yes string, no string, value bool) string {
+		defer recovery()
+		
+		if value {
+			return yes
+		}
+		
+		return no
+	},
+	"stringRjust": func(arg int, value string) string {
+		defer recovery()
+		
+		n := arg - len([]rune(value))
+		
+		if n > 0 {
+			value = strings.Repeat(" ", n) + value
+		}
+		
+		return value
+	},
+	"stringLjust": func(arg int, value string) string {
+		defer recovery()
+		
+		n := arg - len([]rune(value))
+		
+		if n > 0 {
+			value = value + strings.Repeat(" ", n)
+		}
+		
+		return value
+	},
+	"stringCenter": func(arg int, value string) string {
+		defer recovery()
+		
+		n := arg - len([]rune(value))
+		
+		if n > 0 {
+			left := n / 2
+			right := n - left
+			value = strings.Repeat(" ", left) + value + strings.Repeat(" ", right)
+		}
+		
+		return value
+	},
 }
 
 // gtf.New is a wrapper function of template.New(http://golang.org/pkg/text/template/#New). 

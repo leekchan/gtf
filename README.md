@@ -251,6 +251,62 @@ Returns a plural suffix if the value is not 1. You can specify both a singular a
 
 
 
+#### boolYesno
+
+Returns argument strings according to the given boolean value.
+
+**Argument:** strings for true and false
+
+```
+{{ value | boolYesno "yes!" "no!" }}
+```
+
+
+#### stringRjust
+
+Right-aligns the given string in a field of a given width. This function also supports unicode strings. 
+
+```
+{{ value | stringRjust 10 }}
+```
+
+**Examples**
+
+1. If input is {{ "Go" | stringRjust 10 }}, the output will be "        Go".
+1. If input is {{ "안녕하세요" | stringRjust 10 }}, the output will be "     안녕하세요".
+
+
+
+#### stringLjust
+
+Left-aligns the given string in a field of a given width. This function also supports unicode strings. 
+
+```
+{{ value | stringLjust 10 }}
+```
+
+**Examples**
+
+1. If input is {{ "Go" | stringLjust 10 }}, the output will be "Go        ".
+1. If input is {{ "안녕하세요" | stringLjust 10 }}, the output will be "안녕하세요     ".
+
+
+
+#### stringCenter
+
+Centers the given string in a field of a given width. This function also supports unicode strings. 
+
+```
+{{ value | stringCenter 10 }}
+```
+
+**Examples**
+
+1. If input is {{ "Go" | stringCenter 10 }}, the output will be "    Go    ".
+1. If input is {{ "안녕하세요" | stringCenter 10 }}, the output will be "  안녕하세요   ".
+
+
+
 ## Goal
 The main goal is implementing all built-in template filters of Django & Jinja2.
 

@@ -113,4 +113,28 @@ func TestGtfFuncMap(t *testing.T) {
 	
 	ParseTest(&buffer, "{{ 2 | intPluralize \"y,ies,s\" }}")
 	AssertEqual(t, &buffer, "")
+	
+	ParseTest(&buffer, "{{ true | boolYesno \"yes~\" \"no~\" }}")
+	AssertEqual(t, &buffer, "yes~")
+	
+	ParseTest(&buffer, "{{ false | boolYesno \"yes~\" \"no~\" }}")
+	AssertEqual(t, &buffer, "no~")
+	
+	ParseTest(&buffer, "{{ \"Go\" | stringRjust 10 }}")
+	AssertEqual(t, &buffer, "        Go")
+	
+	ParseTest(&buffer, "{{ \"안녕하세요\" | stringRjust 10 }}")
+	AssertEqual(t, &buffer, "     안녕하세요")
+	
+	ParseTest(&buffer, "{{ \"Go\" | stringLjust 10 }}")
+	AssertEqual(t, &buffer, "Go        ")
+	
+	ParseTest(&buffer, "{{ \"안녕하세요\" | stringLjust 10 }}")
+	AssertEqual(t, &buffer, "안녕하세요     ")
+	
+	ParseTest(&buffer, "{{ \"Go\" | stringCenter 10 }}")
+	AssertEqual(t, &buffer, "    Go    ")
+	
+	ParseTest(&buffer, "{{ \"안녕하세요\" | stringCenter 10 }}")
+	AssertEqual(t, &buffer, "  안녕하세요   ")
 }
