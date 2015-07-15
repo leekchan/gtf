@@ -272,8 +272,8 @@ Right-aligns the given string in a field of a given width. This function also su
 
 **Examples**
 
-1. If input is {{ "Go" | stringRjust 10 }}, the output will be "        Go".
-1. If input is {{ "안녕하세요" | stringRjust 10 }}, the output will be "     안녕하세요".
+1. If input is {{ "Go" | stringRjust 10 }}, the output will be "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Go".
+1. If input is {{ "안녕하세요" | stringRjust 10 }}, the output will be "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;안녕하세요".
 
 
 
@@ -287,8 +287,8 @@ Left-aligns the given string in a field of a given width. This function also sup
 
 **Examples**
 
-1. If input is {{ "Go" | stringLjust 10 }}, the output will be "Go        ".
-1. If input is {{ "안녕하세요" | stringLjust 10 }}, the output will be "안녕하세요     ".
+1. If input is {{ "Go" | stringLjust 10 }}, the output will be "Go&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".
+1. If input is {{ "안녕하세요" | stringLjust 10 }}, the output will be "안녕하세요&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".
 
 
 
@@ -302,8 +302,8 @@ Centers the given string in a field of a given width. This function also support
 
 **Examples**
 
-1. If input is {{ "Go" | stringCenter 10 }}, the output will be "    Go    ".
-1. If input is {{ "안녕하세요" | stringCenter 10 }}, the output will be "  안녕하세요   ".
+1. If input is {{ "Go" | stringCenter 10 }}, the output will be "&nbsp;&nbsp;&nbsp;&nbsp;Go&nbsp;&nbsp;&nbsp;&nbsp;".
+1. If input is {{ "안녕하세요" | stringCenter 10 }}, the output will be "&nbsp;&nbsp;안녕하세요&nbsp;&nbsp;&nbsp;".
 
 
 
