@@ -3,6 +3,7 @@ package gtf
 import (
 	"fmt"
 	"html/template"
+	"math"
 	"net/url"
 	"reflect"
 	"strings"
@@ -72,10 +73,34 @@ var GtfFuncMap = template.FuncMap{
 
 		return len(strings.Fields(s))
 	},
-	"intDivisibleby": func(i1 int, i2 int) bool {
+	"divisibleby": func(arg interface{}, value interface{}) bool {
 		defer recovery()
 
-		return i2%i1 == 0
+		var v float64
+		switch value.(type) {
+		case int, int8, int16, int32, int64:
+			v = float64(reflect.ValueOf(value).Int())
+		case uint, uint8, uint16, uint32, uint64:
+			v = float64(reflect.ValueOf(value).Uint())
+		case float32, float64:
+			v = reflect.ValueOf(value).Float()
+		default:
+			return false
+		}
+
+		var a float64
+		switch arg.(type) {
+		case int, int8, int16, int32, int64:
+			a = float64(reflect.ValueOf(arg).Int())
+		case uint, uint8, uint16, uint32, uint64:
+			a = float64(reflect.ValueOf(arg).Uint())
+		case float32, float64:
+			a = reflect.ValueOf(arg).Float()
+		default:
+			return false
+		}
+
+		return math.Mod(v, a) == 0
 	},
 	"stringLengthIs": func(i int, s string) bool {
 		defer recovery()
@@ -92,8 +117,18 @@ var GtfFuncMap = template.FuncMap{
 
 		return strings.ToUpper(string(s[0])) + s[1:]
 	},
-	"intPluralize": func(arg string, value int) string {
+	"pluralize": func(arg string, value interface{}) string {
 		defer recovery()
+
+		flag := false
+		switch value.(type) {
+		case int, int8, int16, int32, int64:
+			flag = reflect.ValueOf(value).Int() == 1
+		case uint, uint8, uint16, uint32, uint64:
+			flag = reflect.ValueOf(value).Uint() == 1
+		default:
+			return ""
+		}
 
 		if !strings.Contains(arg, ",") {
 			arg = "," + arg
@@ -105,7 +140,7 @@ var GtfFuncMap = template.FuncMap{
 			return ""
 		}
 
-		if value == 1 {
+		if flag {
 			return bits[0]
 		}
 

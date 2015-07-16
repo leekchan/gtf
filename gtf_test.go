@@ -75,10 +75,31 @@ func TestGtfFuncMap(t *testing.T) {
 	ParseTest(&buffer, "{{ \"      The      Go       Programming      Language        \" | stringWordcount }}", "")
 	AssertEqual(t, &buffer, "4")
 
-	ParseTest(&buffer, "{{ 21 | intDivisibleby 3 }}", "")
+	ParseTest(&buffer, "{{ 21 | divisibleby 3 }}", "")
 	AssertEqual(t, &buffer, "true")
 
-	ParseTest(&buffer, "{{ 21 | intDivisibleby 4 }}", "")
+	ParseTest(&buffer, "{{ 21 | divisibleby 4 }}", "")
+	AssertEqual(t, &buffer, "false")
+
+	ParseTest(&buffer, "{{ 3.0 | divisibleby 3 }}", "")
+	AssertEqual(t, &buffer, "true")
+
+	ParseTest(&buffer, "{{ 3.0 | divisibleby 1.5 }}", "")
+	AssertEqual(t, &buffer, "true")
+
+	ParseTest(&buffer, "{{ . | divisibleby 1.5 }}", uint(300))
+	AssertEqual(t, &buffer, "true")
+
+	ParseTest(&buffer, "{{ 12 | divisibleby . }}", uint(3))
+	AssertEqual(t, &buffer, "true")
+
+	ParseTest(&buffer, "{{ 21 | divisibleby 4 }}", "")
+	AssertEqual(t, &buffer, "false")
+
+	ParseTest(&buffer, "{{ false | divisibleby 3 }}", "")
+	AssertEqual(t, &buffer, "false")
+
+	ParseTest(&buffer, "{{ 3 | divisibleby false }}", "")
 	AssertEqual(t, &buffer, "false")
 
 	ParseTest(&buffer, "{{ \"Go\" | stringLengthIs 2 }}", "")
@@ -96,22 +117,31 @@ func TestGtfFuncMap(t *testing.T) {
 	ParseTest(&buffer, "{{ \"the go programming language\" | stringCapfirst }}", "")
 	AssertEqual(t, &buffer, "The go programming language")
 
-	ParseTest(&buffer, "You have 0 message{{ 0 | intPluralize \"s\" }}", "")
+	ParseTest(&buffer, "You have 0 message{{ 0 | pluralize \"s\" }}", "")
 	AssertEqual(t, &buffer, "You have 0 messages")
 
-	ParseTest(&buffer, "You have 1 message{{ 1 | intPluralize \"s\" }}", "")
+	ParseTest(&buffer, "You have 1 message{{ 1 | pluralize \"s\" }}", "")
 	AssertEqual(t, &buffer, "You have 1 message")
 
-	ParseTest(&buffer, "0 cand{{ 0 | intPluralize \"y,ies\" }}", "")
+	ParseTest(&buffer, "0 cand{{ 0 | pluralize \"y,ies\" }}", "")
 	AssertEqual(t, &buffer, "0 candies")
 
-	ParseTest(&buffer, "1 cand{{ 1 | intPluralize \"y,ies\" }}", "")
+	ParseTest(&buffer, "1 cand{{ 1 | pluralize \"y,ies\" }}", "")
 	AssertEqual(t, &buffer, "1 candy")
 
-	ParseTest(&buffer, "2 cand{{ 2 | intPluralize \"y,ies\" }}", "")
+	ParseTest(&buffer, "2 cand{{ 2 | pluralize \"y,ies\" }}", "")
 	AssertEqual(t, &buffer, "2 candies")
 
-	ParseTest(&buffer, "{{ 2 | intPluralize \"y,ies,s\" }}", "")
+	ParseTest(&buffer, "{{ 2 | pluralize \"y,ies,s\" }}", "")
+	AssertEqual(t, &buffer, "")
+
+	ParseTest(&buffer, "2 cand{{ . | pluralize \"y,ies\" }}", uint(2))
+	AssertEqual(t, &buffer, "2 candies")
+
+	ParseTest(&buffer, "1 cand{{ . | pluralize \"y,ies\" }}", uint(1))
+	AssertEqual(t, &buffer, "1 candy")
+
+	ParseTest(&buffer, "{{ . | pluralize \"y,ies\" }}", "test")
 	AssertEqual(t, &buffer, "")
 
 	ParseTest(&buffer, "{{ true | boolYesno \"yes~\" \"no~\" }}", "")

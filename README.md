@@ -67,7 +67,7 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 **Examples**
 
 1. [stringLength](#stringlength) => The type of the input value is string, and the function will return the length of the given value.
-1. [intDivisibleby](#intdivisibleby) => The type of the input value is int, and the function will return true if the value is divisible by the argument.
+1. [divisibleby](#divisibleby) => The type of the input value is int, and the function will return true if the value is divisible by the argument.
 1. [filesizeformat](#filesizeformat) => It supports various types(int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64).
 
 
@@ -84,11 +84,11 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 * [stringTruncatechars](#stringtruncatechars)
 * [stringUrlencode](#stringurlencode)
 * [stringWordcount](#stringwordcount)
-* [intDivisibleby](#intdivisibleby)
+* [divisibleby](#divisibleby)
 * [stringLengthIs](#stringlengthIs)
 * [stringTrim](#stringtrim)
 * [stringCapfirst](#stringcapfirst)
-* [intPluralize](#intpluralize)
+* [pluralize](#pluralize)
 * [boolYesno](#boolyesno)
 * [stringRjust](#stringrjust)
 * [stringLjust](#stringljust)
@@ -198,18 +198,22 @@ If value is "The Go Programming Language", the output will be 4.
 
 
 
-#### intDivisibleby
+#### divisibleby
 
 Returns true if the value is divisible by the argument.
 
+* supported value types : int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64
+* supported argument types : int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64
+
 ```
-{{ value | intDivisibleby 3 }}
+{{ value | divisibleby 3 }}
 ```
 
 **Examples**
 
-1. If input is {{ 21 | intDivisibleby 3 }}, the output will be true.
-1. If input is {{ 21 | intDivisibleby 4 }}, the output will be false.
+1. If input is {{ 21 | divisibleby 3 }}, the output will be true.
+1. If input is {{ 21 | divisibleby 4 }}, the output will be false.
+1. If input is {{ 3.0 | divisibleby 1.5 }}, the output will be true.
 
 
 
@@ -252,7 +256,7 @@ If value is "the go programming language", the output will be "The go programmin
 
 
 
-#### intPluralize
+#### pluralize
 
 Returns a plural suffix if the value is not 1. You can specify both a singular and plural suffix, separated by a comma.
 
@@ -261,18 +265,21 @@ Returns a plural suffix if the value is not 1. You can specify both a singular a
 1. "s" --> specify a singular suffix.
 2. "y,ies" --> specify both a singular and plural suffix.
 
+* supported value types : int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64
+* supported argument types : string
+
 ```
-{{ value | intPluralize "s" }}
-{{ value | intPluralize "y,ies" }}
+{{ value | pluralize "s" }}
+{{ value | pluralize "y,ies" }}
 ```
 
 **Examples**
 
-1. You have 0 message{{ 0 | intPluralize "s" }} --> You have 0 messages
-2. You have 1 message{{ 1 | intPluralize "s" }} --> You have 1 message
-3. 0 cand{{ 0 | intPluralize "y,ies" }} --> 0 candies
-4. 1 cand{{ 1 | intPluralize "y,ies" }} --> 1 candy
-5. 2 cand{{ 2 | intPluralize "y,ies" }} --> 2 candies
+1. You have 0 message{{ 0 | pluralize "s" }} --> You have 0 messages
+2. You have 1 message{{ 1 | pluralize "s" }} --> You have 1 message
+3. 0 cand{{ 0 | pluralize "y,ies" }} --> 0 candies
+4. 1 cand{{ 1 | pluralize "y,ies" }} --> 1 candy
+5. 2 cand{{ 2 | pluralize "y,ies" }} --> 2 candies
 
 
 
@@ -336,7 +343,7 @@ Centers the given string in a field of a given width. This function also support
 
 Formats the value like a human readable file size.
 
-**supported value types:** int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64
+* supported value types : *int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64
 
 ```
 {{ value | filesizeformat }}
