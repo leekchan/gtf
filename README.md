@@ -60,19 +60,41 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 
 ## Naming convention
 
-1. prefix(type of input value) + function : It supports only one type. (For example, "stringLower" function's input value will be always string.) 
+1. prefix(type of input value) + function : It supports only one type.
 2. no prefix + function : It supports various types and evaluates input type in runtime. Please refer to "supported value types" of each function in reference. (For example, the input value of "filesizeformat" could be int or float.)
 
 
 **Examples**
 
-1. stringLength => The type of the input value is string, and the function will return the length of the given value.
-1. intDivisibleby => The type of the input value is int, and the function will return true if the value is divisible by the argument.
-1. filesizeformat => It supports various types(int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64).
+1. [stringLength](#stringLength) => The type of the input value is string, and the function will return the length of the given value.
+1. [intDivisibleby](#intDivisibleby) => The type of the input value is int, and the function will return true if the value is divisible by the argument.
+1. [filesizeformat](#filesizeformat) => It supports various types(int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64).
 
 
 
 ## Reference
+
+### Index
+
+* [stringReplace](#stringReplace)
+* [stringDefault](#stringDefault)
+* [stringLength](#stringLength)
+* [stringLower](#stringLower)
+* [stringUpper](#stringUpper)
+* [stringTruncatechars](#stringTruncatechars)
+* [stringUrlencode](#stringUrlencode)
+* [stringWordcount](#stringWordcount)
+* [intDivisibleby](#intDivisibleby)
+* [stringLengthIs](#stringLengthIs)
+* [stringTrim](#stringTrim)
+* [stringCapfirst](#stringCapfirst)
+* [intPluralize](#intPluralize)
+* [boolYesno](#boolYesno)
+* [stringRjust](#stringRjust)
+* [stringLjust](#stringLjust)
+* [stringCenter](#stringCenter)
+* [filesizeformat](#filesizeformat)
+
 #### stringReplace
 
 Removes all values of arg from the given string.
