@@ -15,35 +15,54 @@ func recovery() {
 }
 
 var GtfFuncMap = template.FuncMap{
-	"stringReplace": func(s1 string, s2 string) string {
+	"replace": func(s1 string, s2 string) string {
 		defer recovery()
 
 		return strings.Replace(s2, s1, "", -1)
 	},
-	"stringDefault": func(s1 string, s2 string) string {
+	"default": func(arg interface{}, value interface{}) interface{} {
 		defer recovery()
 
-		if len(s2) > 0 {
-			return s2
+		v := reflect.ValueOf(value)
+		switch v.Kind() {
+		case reflect.String, reflect.Slice, reflect.Array, reflect.Map:
+			if v.Len() == 0 {
+				return arg
+			}
+		case reflect.Bool:
+			if !v.Bool() {
+				return arg
+			}
+		default:
+			return value
 		}
-		return s1
+
+		return value
 	},
-	"stringLength": func(s string) int {
+	"length": func(value interface{}) int {
 		defer recovery()
 
-		return len(s)
+		v := reflect.ValueOf(value)
+		switch v.Kind() {
+		case reflect.Slice, reflect.Array, reflect.Map:
+			return v.Len()
+		case reflect.String:
+			return len([]rune(v.String()))
+		}
+
+		return 0
 	},
-	"stringLower": func(s string) string {
+	"lower": func(s string) string {
 		defer recovery()
 
 		return strings.ToLower(s)
 	},
-	"stringUpper": func(s string) string {
+	"upper": func(s string) string {
 		defer recovery()
 
 		return strings.ToUpper(s)
 	},
-	"stringTruncatechars": func(n int, s string) string {
+	"truncatechars": func(n int, s string) string {
 		defer recovery()
 
 		if n < 0 {
@@ -63,12 +82,12 @@ var GtfFuncMap = template.FuncMap{
 
 		return string(r[:n])
 	},
-	"stringUrlencode": func(s string) string {
+	"urlencode": func(s string) string {
 		defer recovery()
 
 		return url.QueryEscape(s)
 	},
-	"stringWordcount": func(s string) int {
+	"wordcount": func(s string) int {
 		defer recovery()
 
 		return len(strings.Fields(s))
@@ -102,17 +121,25 @@ var GtfFuncMap = template.FuncMap{
 
 		return math.Mod(v, a) == 0
 	},
-	"stringLengthIs": func(i int, s string) bool {
+	"lengthis": func(arg int, value interface{}) bool {
 		defer recovery()
 
-		return i == len([]rune(s))
+		v := reflect.ValueOf(value)
+		switch v.Kind() {
+		case reflect.Slice, reflect.Array, reflect.Map:
+			return v.Len() == arg
+		case reflect.String:
+			return len([]rune(v.String())) == arg
+		}
+
+		return false
 	},
-	"stringTrim": func(s string) string {
+	"trim": func(s string) string {
 		defer recovery()
 
 		return strings.TrimSpace(s)
 	},
-	"stringCapfirst": func(s string) string {
+	"capfirst": func(s string) string {
 		defer recovery()
 
 		return strings.ToUpper(string(s[0])) + s[1:]
@@ -146,7 +173,7 @@ var GtfFuncMap = template.FuncMap{
 
 		return bits[1]
 	},
-	"boolYesno": func(yes string, no string, value bool) string {
+	"yesno": func(yes string, no string, value bool) string {
 		defer recovery()
 
 		if value {
@@ -155,7 +182,7 @@ var GtfFuncMap = template.FuncMap{
 
 		return no
 	},
-	"stringRjust": func(arg int, value string) string {
+	"rjust": func(arg int, value string) string {
 		defer recovery()
 
 		n := arg - len([]rune(value))
@@ -166,7 +193,7 @@ var GtfFuncMap = template.FuncMap{
 
 		return value
 	},
-	"stringLjust": func(arg int, value string) string {
+	"ljust": func(arg int, value string) string {
 		defer recovery()
 
 		n := arg - len([]rune(value))
@@ -177,7 +204,7 @@ var GtfFuncMap = template.FuncMap{
 
 		return value
 	},
-	"stringCenter": func(arg int, value string) string {
+	"center": func(arg int, value string) string {
 		defer recovery()
 
 		n := arg - len([]rune(value))

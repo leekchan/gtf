@@ -21,8 +21,9 @@ import (
 
 func main() {
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		tpl, _ := gtf.New("test").Parse("{{ \"The Go Programming Language\" | stringReplace \" \" }}")
-		tpl.Execute(w, "")
+		filesize := 554832114
+		tpl, _ := gtf.New("test").Funcs(gtf.GtfFuncMap).Parse("{{ . | filesizeformat }}")
+		tpl.Execute(w, filesize)
 	})
     http.ListenAndServe(":8080", nil)
 }
@@ -43,8 +44,9 @@ import (
 
 func main() {
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		tpl, _ := template.New("test").Funcs(gtf.GtfFuncMap).Parse("{{ \"The Go Programming Language\" | stringReplace \" \" }}")
-		tpl.Execute(w, "")
+		filesize := 554832114
+		tpl, _ := template.New("test").Funcs(gtf.GtfFuncMap).Parse("{{ . | filesizeformat }}")
+		tpl.Execute(w, filesize)
 	})
     http.ListenAndServe(":8080", nil)
 }
@@ -58,139 +60,148 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 
 
 
-## Naming convention
-
-1. prefix(type of input value) + function : It supports only one type.
-2. no prefix + function : It supports various types and evaluates input type in runtime. Please refer to "supported value types" of each function in reference. (For example, the input value of "filesizeformat" could be int or float.)
-
-
-**Examples**
-
-1. [stringLength](#stringlength) => The type of the input value is string, and the function will return the length of the given value.
-1. [filesizeformat](#filesizeformat) => It supports various types(int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64).
-
-
-
 ## Reference
 
 ### Index
 
-* [stringReplace](#stringreplace)
-* [stringDefault](#stringdefault)
-* [stringLength](#stringlength)
-* [stringLower](#stringlower)
-* [stringUpper](#stringupper)
-* [stringTruncatechars](#stringtruncatechars)
-* [stringUrlencode](#stringurlencode)
-* [stringWordcount](#stringwordcount)
+* [replace](#replace)
+* [default](#default)
+* [length](#length)
+* [lower](#lower)
+* [upper](#upper)
+* [truncatechars](#truncatechars)
+* [urlencode](#urlencode)
+* [wordcount](#wordcount)
 * [divisibleby](#divisibleby)
-* [stringLengthIs](#stringlengthIs)
-* [stringTrim](#stringtrim)
-* [stringCapfirst](#stringcapfirst)
+* [lengthis](#lengthis)
+* [trim](#trim)
+* [capfirst](#capfirst)
 * [pluralize](#pluralize)
-* [boolYesno](#boolyesno)
-* [stringRjust](#stringrjust)
-* [stringLjust](#stringljust)
-* [stringCenter](#stringcenter)
+* [yesno](#yesno)
+* [rjust](#rjust)
+* [ljust](#ljust)
+* [center](#center)
 * [filesizeformat](#filesizeformat)
 
 
-#### stringReplace
+#### replace
 
 Removes all values of arg from the given string.
 
+* supported value types : string
+* supported argument types : string
+
 ```
-{{ value | stringReplace " " }}
+{{ value | replace " " }}
 ```
 If value is "The Go Programming Language", the output will be "TheGoProgrammingLanguage".
 
 
 
-#### stringDefault
+#### default
 
-If value is ""(the empty string), uses the given default string.
+1. If the given string is ""(empty string), uses the given default argument.
+1. If the given array/slice/map is empty, uses the given default argument.
+1. If the given boolean value is false, uses the given default argument.
+
+* supported value types : string, array, slice, map, boolean
+* supported argument types : all
 
 ```
-{{ value | stringDefault "default value" }}
+{{ value | default "default value" }}
 ```
 If value is ""(the empty string), the output will be "default value".
 
 
 
-#### stringLength
+#### length
 
-Returns the length of the given string.
+Returns the length of the given string/array/slice/map.
+
+* supported value types : string, array, slice, map
+
+This function also supports unicode strings.
 
 ```
-{{ value | stringLength }}
+{{ value | length }}
 ```
 If value is "The Go Programming Language", the output will be 27.
 
 
 
-#### stringLower
+#### lower
 
 Converts the given string into all lowercase.
 
+* supported value types : string
+
 ```
-{{ value | stringLower }}
+{{ value | lower }}
 ```
 If value is "The Go Programming Language", the output will be "the go programming language".
 
 
 
-#### stringUpper
+#### upper
 
 Converts the given string into all uppercase.
 
+* supported value types : string
+
 ```
-{{ value | stringUpper }}
+{{ value | upper }}
 ```
 If value is "The Go Programming Language", the output will be "THE GO PROGRAMMING LANGUAGE".
 
 
 
-#### stringTruncatechars
+#### truncatechars
 
 Truncates the given string if it is longer than the specified number of characters. Truncated strings will end with a translatable ellipsis sequence ("...")
+
+* supported value types : string
 
 **Argument:** Number of characters to truncate to
 
 This function also supports unicode strings.
 
 ```
-{{ value | stringTruncatechars 12 }}
+{{ value | truncatechars 12 }}
 ```
 
 **Examples**
 
-1. If input is {{ "The Go Programming Language" | stringTruncatechars 12 }}, the output will be "The Go Pr...". (basic string)
-1. If input is {{ "안녕하세요. 반갑습니다." | stringTruncatechars 12 }}, the output will be "안녕하세요. 반갑...". (unicode)
-1. If input is {{ "안녕하세요. The Go Programming Language" | stringTruncatechars 30 }}, the output will be "안녕하세요. The Go Programming L...". (unicode)
-1. If input is {{ "The" | stringTruncatechars 30 }}, the output will be "The". (If the length of the given string is shorter than the argument, the output will be the original string.)
-1. If input is {{ "The Go Programming Language" | stringTruncatechars 3 }}, the output will be "The". (If the argument is less than or equal to 3, the output will not contain "...".)
-1. If input is {{ "The Go" | stringTruncatechars -1 }}, the output will be "The Go". (If the argument is less than 0, the argument will be ignored.)
+1. If input is {{ "The Go Programming Language" | truncatechars 12 }}, the output will be "The Go Pr...". (basic string)
+1. If input is {{ "안녕하세요. 반갑습니다." | truncatechars 12 }}, the output will be "안녕하세요. 반갑...". (unicode)
+1. If input is {{ "안녕하세요. The Go Programming Language" | truncatechars 30 }}, the output will be "안녕하세요. The Go Programming L...". (unicode)
+1. If input is {{ "The" | truncatechars 30 }}, the output will be "The". (If the length of the given string is shorter than the argument, the output will be the original string.)
+1. If input is {{ "The Go Programming Language" | truncatechars 3 }}, the output will be "The". (If the argument is less than or equal to 3, the output will not contain "...".)
+1. If input is {{ "The Go" | truncatechars -1 }}, the output will be "The Go". (If the argument is less than 0, the argument will be ignored.)
 
 
 
-#### stringUrlencode
+#### urlencode
 
 Escapes the given string for use in a URL.
 
+* supported value types : string
+
 ```
-{{ value | stringUrlencode }}
+{{ value | urlencode }}
 ```
 
 If value is "http://www.example.org/foo?a=b&c=d", the output will be "http%3A%2F%2Fwww.example.org%2Ffoo%3Fa%3Db%26c%3Dd".
 
 
 
-#### stringWordcount
+#### wordcount
 
 Returns the number of words.
 
+* supported value types : string
+
 ```
-{{ value | stringWordcount }}
+{{ value | wordcount }}
 ```
 
 If value is "The Go Programming Language", the output will be 4.
@@ -216,39 +227,46 @@ Returns true if the value is divisible by the argument.
 
 
 
-#### stringLengthIs
+#### lengthis
 
 Returns true if the value's length is the argument, or false otherwise.
 
+* supported value types : string, array, slice, map
+* supported argument types : int
+
 ```
-{{ value | stringLengthIs 3 }}
+{{ value | lengthis 3 }}
 ```
 
 This function also supports unicode strings.
 
 **Examples**
 
-1. If input is {{ "Go" | stringLengthIs 2 }}, the output will be true.
-1. If input is {{ "안녕하세요. Go!" | stringLengthIs 10 }}, the output will be true.
+1. If input is {{ "Go" | lengthis 2 }}, the output will be true.
+1. If input is {{ "안녕하세요. Go!" | lengthis 10 }}, the output will be true.
 
 
 
-#### stringTrim
+#### trim
 
 Strips leading and trailing whitespace. 
 
+* supported value types : string
+
 ```
-{{ value | stringTrim }}
+{{ value | trim }}
 ```
 
 
 
-#### stringCapfirst
+#### capfirst
 
 Capitalizes the first character of the given string.
 
+* supported value types : string
+
 ```
-{{ value | stringCapfirst }}
+{{ value | capfirst }}
 ```
 
 If value is "the go programming language", the output will be "The go programming language".
@@ -282,59 +300,67 @@ Returns a plural suffix if the value is not 1. You can specify both a singular a
 
 
 
-#### boolYesno
+#### yesno
 
 Returns argument strings according to the given boolean value.
 
-**Argument:** strings for true and false
+* supported value types : string
+
+**Argument:** any value for true and false
 
 ```
-{{ value | boolYesno "yes!" "no!" }}
+{{ value | yesno "yes!" "no!" }}
 ```
 
 
-#### stringRjust
+#### rjust
 
 Right-aligns the given string in a field of a given width. This function also supports unicode strings. 
 
+* supported value types : string
+
 ```
-{{ value | stringRjust 10 }}
+{{ value | rjust 10 }}
 ```
 
 **Examples**
 
-1. If input is {{ "Go" | stringRjust 10 }}, the output will be "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Go".
-1. If input is {{ "안녕하세요" | stringRjust 10 }}, the output will be "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;안녕하세요".
+1. If input is {{ "Go" | rjust 10 }}, the output will be "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Go".
+1. If input is {{ "안녕하세요" | rjust 10 }}, the output will be "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;안녕하세요".
 
 
 
-#### stringLjust
+#### ljust
 
 Left-aligns the given string in a field of a given width. This function also supports unicode strings. 
 
+* supported value types : string
+
 ```
-{{ value | stringLjust 10 }}
+{{ value | ljust 10 }}
 ```
 
 **Examples**
 
-1. If input is {{ "Go" | stringLjust 10 }}, the output will be "Go&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".
-1. If input is {{ "안녕하세요" | stringLjust 10 }}, the output will be "안녕하세요&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".
+1. If input is {{ "Go" | ljust 10 }}, the output will be "Go&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".
+1. If input is {{ "안녕하세요" | ljust 10 }}, the output will be "안녕하세요&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".
 
 
 
-#### stringCenter
+#### center
 
 Centers the given string in a field of a given width. This function also supports unicode strings. 
 
+* supported value types : string
+
 ```
-{{ value | stringCenter 10 }}
+{{ value | center 10 }}
 ```
 
 **Examples**
 
-1. If input is {{ "Go" | stringCenter 10 }}, the output will be "&nbsp;&nbsp;&nbsp;&nbsp;Go&nbsp;&nbsp;&nbsp;&nbsp;".
-1. If input is {{ "안녕하세요" | stringCenter 10 }}, the output will be "&nbsp;&nbsp;안녕하세요&nbsp;&nbsp;&nbsp;".
+1. If input is {{ "Go" | center 10 }}, the output will be "&nbsp;&nbsp;&nbsp;&nbsp;Go&nbsp;&nbsp;&nbsp;&nbsp;".
+1. If input is {{ "안녕하세요" | center 10 }}, the output will be "&nbsp;&nbsp;안녕하세요&nbsp;&nbsp;&nbsp;".
 
 
 
