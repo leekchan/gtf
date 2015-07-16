@@ -76,7 +76,7 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 
 ### Index
 
-* <a name="stringReplace">stringReplace</a>
+* [stringReplace](stringReplace)
 * <a href="#stringDefault">stringDefault</a>
 * <a href="#stringLength">stringLength</a>
 * <a href="#stringLower">stringLower</a>
