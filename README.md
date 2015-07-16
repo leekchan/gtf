@@ -313,9 +313,9 @@ Centers the given string in a field of a given width. This function also support
 
 Formats the value like a human readable file size.
 
-```
-supported value types : int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64
+**supported value types:** int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64
 
+```
 {{ value | filesizeformat }}
 ```
 
