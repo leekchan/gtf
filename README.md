@@ -304,7 +304,8 @@ Returns a plural suffix if the value is not 1. You can specify both a singular a
 
 Returns argument strings according to the given boolean value.
 
-* supported value types : string
+* supported value types : boolean
+* supported argument types : string
 
 **Argument:** any value for true and false
 
