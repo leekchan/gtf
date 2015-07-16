@@ -67,7 +67,6 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 **Examples**
 
 1. [stringLength](#stringlength) => The type of the input value is string, and the function will return the length of the given value.
-1. [divisibleby](#divisibleby) => The type of the input value is int, and the function will return true if the value is divisible by the argument.
 1. [filesizeformat](#filesizeformat) => It supports various types(int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64).
 
 
