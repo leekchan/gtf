@@ -59,10 +59,10 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 
 
 ## Naming convention
-```
+
 1. prefix(type of input value) + function : It supports only one type. (For example, "stringLower" function's input value will be always string.) 
 2. no prefix + function : It supports various types and evaluates input type in runtime. Please refer to "supported value types" of each function in reference. (For example, the input value of "filesizeformat" could be int or float.)
-```
+
 
 **Examples**
 
