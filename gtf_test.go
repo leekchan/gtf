@@ -35,6 +35,12 @@ func TestGtfFuncMap(t *testing.T) {
 
 	ParseTest(&buffer, "{{ . | default 10 }}", []int{})
 	AssertEqual(t, &buffer, "10")
+	
+	ParseTest(&buffer, "{{ . | default \"empty\" }}", false)
+	AssertEqual(t, &buffer, "empty")
+	
+	ParseTest(&buffer, "{{ . | default \"empty\" }}", 1)
+	AssertEqual(t, &buffer, "1")
 
 	ParseTest(&buffer, "{{ \"The Go Programming Language\" | length }}", "")
 	AssertEqual(t, &buffer, "27")
