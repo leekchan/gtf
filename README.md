@@ -66,9 +66,9 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 
 **Examples**
 
-1. [stringLength](#stringLength) => The type of the input value is string, and the function will return the length of the given value.
-1. [intDivisibleby](#intDivisibleby) => The type of the input value is int, and the function will return true if the value is divisible by the argument.
-1. [filesizeformat](#filesizeformat) => It supports various types(int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64).
+1. <a href="#stringLength">stringLength</a> => The type of the input value is string, and the function will return the length of the given value.
+1. <a href="#intDivisibleby">intDivisibleby</a> => The type of the input value is int, and the function will return true if the value is divisible by the argument.
+1. <a href="#filesizeformat">filesizeformat</a> => It supports various types(int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64).
 
 
 
@@ -76,24 +76,24 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 
 ### Index
 
-* [stringReplace](./#stringReplace)
-* [stringDefault](/#stringDefault)
-* [stringLength](#stringLength)
-* [stringLower](#stringLower)
-* [stringUpper](#stringUpper)
-* [stringTruncatechars](#stringTruncatechars)
-* [stringUrlencode](#stringUrlencode)
-* [stringWordcount](#stringWordcount)
-* [intDivisibleby](#intDivisibleby)
-* [stringLengthIs](#stringLengthIs)
-* [stringTrim](#stringTrim)
-* [stringCapfirst](#stringCapfirst)
-* [intPluralize](#intPluralize)
-* [boolYesno](#boolYesno)
-* [stringRjust](#stringRjust)
-* [stringLjust](#stringLjust)
-* [stringCenter](#stringCenter)
-* [filesizeformat](#filesizeformat)
+* <a href="#stringReplace">stringReplace</a>
+* <a href="#stringDefault">stringDefault</a>
+* <a href="#stringLength">stringLength</a>
+* <a href="#stringLower">stringLower</a>
+* <a href="#stringUpper">stringUpper</a>
+* <a href="#stringTruncatechars">stringTruncatechars</a>
+* <a href="#stringUrlencode">stringUrlencode</a>
+* <a href="#stringWordcount">stringWordcount</a>
+* <a href="#intDivisibleby">intDivisibleby</a>
+* <a href="#stringLengthIs">stringLengthIs</a>
+* <a href="#stringTrim">stringTrim</a>
+* <a href="#stringCapfirst">stringCapfirst</a>
+* <a href="#intPluralize">intPluralize</a>
+* <a href="#boolYesno">boolYesno</a>
+* <a href="#stringRjust">stringRjust</a>
+* <a href="#stringLjust">stringLjust</a>
+* <a href="#stringCenter">stringCenter</a>
+* <a href="#filesizeformat">filesizeformat</a>
 
 #### stringReplace
 
