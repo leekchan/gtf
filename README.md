@@ -60,13 +60,15 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 
 ## Naming convention
 ```
-prefix(type of input value) + function
+1. prefix(type of input value) + function : It supports only one type. (For example, "stringLower" function's input value will be always string.) 
+2. no prefix + function : It supports various types and evaluates input type in runtime. Please refer to "supported value types" of each function in reference. (For example, the input value of "filesizeformat" could be int or float.)
 ```
 
 **Examples**
 
 1. stringLength => The type of the input value is string, and the function will return the length of the given value.
 1. intDivisibleby => The type of the input value is int, and the function will return true if the value is divisible by the argument.
+1. filesizeformat => It supports various types(int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64).
 
 
 
@@ -304,6 +306,29 @@ Centers the given string in a field of a given width. This function also support
 
 1. If input is {{ "Go" | stringCenter 10 }}, the output will be "&nbsp;&nbsp;&nbsp;&nbsp;Go&nbsp;&nbsp;&nbsp;&nbsp;".
 1. If input is {{ "안녕하세요" | stringCenter 10 }}, the output will be "&nbsp;&nbsp;안녕하세요&nbsp;&nbsp;&nbsp;".
+
+
+
+#### filesizeformat
+
+Formats the value like a human readable file size.
+
+```
+supported value types : int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64
+
+{{ value | filesizeformat }}
+```
+
+**Examples**
+
+1. {{ 234 | filesizeformat }} --> "234 bytes"
+1. {{ 12345 | filesizeformat }} --> "12.1 KB"
+1. {{ 12345.35335 | filesizeformat }} --> "12.1 KB"
+1. {{ 1048576 | filesizeformat } --> "1 MB"
+1. {{ 554832114 | filesizeformat }} --> "529.1 MB"
+1. {{ 14868735121 | filesizeformat }} --> "13.8 GB"
+1. {{ 14868735121365 | filesizeformat }} --> "13.5 TB"
+1. {{ 1486873512136523 | filesizeformat }} --> "1.3 PB"
 
 
 

@@ -137,4 +137,34 @@ func TestGtfFuncMap(t *testing.T) {
 	
 	ParseTest(&buffer, "{{ \"안녕하세요\" | stringCenter 10 }}")
 	AssertEqual(t, &buffer, "  안녕하세요   ")
+	
+	ParseTest(&buffer, "{{ 123456789 | filesizeformat }}")
+	AssertEqual(t, &buffer, "117.7 MB")
+	
+	ParseTest(&buffer, "{{ 234 | filesizeformat }}")
+	AssertEqual(t, &buffer, "234 bytes")
+	
+	ParseTest(&buffer, "{{ 12345 | filesizeformat }}")
+	AssertEqual(t, &buffer, "12.1 KB")
+	
+	ParseTest(&buffer, "{{ 554832114 | filesizeformat }}")
+	AssertEqual(t, &buffer, "529.1 MB")
+	
+	ParseTest(&buffer, "{{ 1048576 | filesizeformat }}")
+	AssertEqual(t, &buffer, "1 MB")
+	
+	ParseTest(&buffer, "{{ 14868735121 | filesizeformat }}")
+	AssertEqual(t, &buffer, "13.8 GB")
+	
+	ParseTest(&buffer, "{{ 14868735121365 | filesizeformat }}")
+	AssertEqual(t, &buffer, "13.5 TB")
+	
+	ParseTest(&buffer, "{{ 1486873512136523 | filesizeformat }}")
+	AssertEqual(t, &buffer, "1.3 PB")
+	
+	ParseTest(&buffer, "{{ 12345.35335 | filesizeformat }}")
+	AssertEqual(t, &buffer, "12.1 KB")
+	
+	ParseTest(&buffer, "{{ 4294967293 | filesizeformat }}")
+	AssertEqual(t, &buffer, "4 GB")
 }

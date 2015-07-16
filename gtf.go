@@ -4,6 +4,8 @@ import (
 	"html/template"
     "strings"
 	"net/url"
+	"fmt"
+	"reflect"
 )
 
 // recovery will silently swallow all unexpected panics.
@@ -152,6 +154,49 @@ var GtfFuncMap = template.FuncMap {
 		}
 		
 		return value
+	},
+	"filesizeformat": func(value interface{}) string {
+		defer recovery()
+		
+		var size float64
+		
+		switch value.(type) {
+			case int, int8, int16, int32, int64:
+				size = float64(reflect.ValueOf(value).Int())
+			case uint, uint8, uint16, uint32, uint64:
+				size = float64(reflect.ValueOf(value).Uint())
+			case float32, float64:
+				size = reflect.ValueOf(value).Float()
+			default:
+				return ""
+		}
+		
+		var KB float64 = 1 << 10
+		var MB float64 = 1 << 20
+		var GB float64 = 1 << 30
+		var TB float64 = 1 << 40
+		var PB float64 = 1 << 50
+		
+		filesizeFormat := func (filesize float64, suffix string) string {
+			return strings.Replace(fmt.Sprintf("%.1f %s", filesize, suffix), ".0", "", -1)
+		}
+		
+		var result string;
+		if size < KB {
+			result = filesizeFormat(size, "bytes")
+		} else if size < MB {
+			result = filesizeFormat(size / KB, "KB")
+		} else if size < GB {
+			result = filesizeFormat(size / MB, "MB")
+		} else if size < TB {
+			result = filesizeFormat(size / GB, "GB")
+		} else if size < PB {
+			result = filesizeFormat(size / TB, "TB")
+		} else {
+			result = filesizeFormat(size / PB, "PB")
+		}
+		
+		return result
 	},
 }
 
