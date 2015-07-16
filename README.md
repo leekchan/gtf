@@ -66,9 +66,9 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 
 **Examples**
 
-1. <a href="https://github.com/leekchan/gtf#stringLength">stringLength</a> => The type of the input value is string, and the function will return the length of the given value.
-1. <a href="https://github.com/leekchan/gtf#intDivisibleby">intDivisibleby</a> => The type of the input value is int, and the function will return true if the value is divisible by the argument.
-1. <a href="https://github.com/leekchan/gtf#filesizeformat">filesizeformat</a> => It supports various types(int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64).
+1. [stringLength](#stringlength) => The type of the input value is string, and the function will return the length of the given value.
+1. [intDivisibleby](#intdivisibleby) => The type of the input value is int, and the function will return true if the value is divisible by the argument.
+1. [filesizeformat](#filesizeformat) => It supports various types(int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, float32, float64).
 
 
 
@@ -76,24 +76,25 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 
 ### Index
 
-* <a href="https://github.com/leekchan/gtf#stringreplace">stringreplace</a>
-* <a href="https://github.com/leekchan/gtf#stringDefault">stringDefault</a>
-* <a href="https://github.com/leekchan/gtf#stringLength">stringLength</a>
-* <a href="https://github.com/leekchan/gtf#stringLower">stringLower</a>
-* <a href="https://github.com/leekchan/gtf#stringUpper">stringUpper</a>
-* <a href="https://github.com/leekchan/gtf#stringTruncatechars">stringTruncatechars</a>
-* <a href="https://github.com/leekchan/gtf#stringUrlencode">stringUrlencode</a>
-* <a href="https://github.com/leekchan/gtf#stringWordcount">stringWordcount</a>
-* <a href="https://github.com/leekchan/gtf#intDivisibleby">intDivisibleby</a>
-* <a href="https://github.com/leekchan/gtf#stringLengthIs">stringLengthIs</a>
-* <a href="https://github.com/leekchan/gtf#stringTrim">stringTrim</a>
-* <a href="https://github.com/leekchan/gtf#stringCapfirst">stringCapfirst</a>
-* <a href="https://github.com/leekchan/gtf#intPluralize">intPluralize</a>
-* <a href="https://github.com/leekchan/gtf#boolYesno">boolYesno</a>
-* <a href="https://github.com/leekchan/gtf#stringRjust">stringRjust</a>
-* <a href="https://github.com/leekchan/gtf#stringLjust">stringLjust</a>
-* <a href="https://github.com/leekchan/gtf#stringCenter">stringCenter</a>
-* <a href="https://github.com/leekchan/gtf#filesizeformat">filesizeformat</a>
+* [stringReplace](#stringreplace)
+* [stringDefault](#stringdefault)
+* [stringLength](#stringlength)
+* [stringLower](#stringlower)
+* [stringUpper](#stringupper)
+* [stringTruncatechars](#stringtruncatechars)
+* [stringUrlencode](#stringurlencode)
+* [stringWordcount](#stringwordcount)
+* [intDivisibleby](#intdivisibleby)
+* [stringLengthIs](#stringlengthIs)
+* [stringTrim](#stringtrim)
+* [stringCapfirst](#stringcapfirst)
+* [intPluralize](#intpluralize)
+* [boolYesno](#boolyesno)
+* [stringRjust](#stringrjust)
+* [stringLjust](#stringljust)
+* [stringCenter](#stringcenter)
+* [filesizeformat](#filesizeformat)
+
 
 #### stringReplace
 
