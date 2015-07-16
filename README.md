@@ -76,8 +76,8 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 
 ### Index
 
-* [stringReplace](#stringReplace)
-* [stringDefault](#stringDefault)
+* [stringReplace](./#stringReplace)
+* [stringDefault](/#stringDefault)
 * [stringLength](#stringLength)
 * [stringLower](#stringLower)
 * [stringUpper](#stringUpper)
