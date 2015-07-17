@@ -22,7 +22,7 @@ import (
 func main() {
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		filesize := 554832114
-		tpl, _ := gtf.New("test").Funcs(gtf.GtfFuncMap).Parse("{{ . | filesizeformat }}")
+		tpl, _ := gtf.New("test").Parse("{{ . | filesizeformat }}")
 		tpl.Execute(w, filesize)
 	})
     http.ListenAndServe(":8080", nil)
