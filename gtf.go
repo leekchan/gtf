@@ -148,11 +148,12 @@ var GtfFuncMap = template.FuncMap{
 		defer recovery()
 
 		flag := false
-		switch value.(type) {
-		case int, int8, int16, int32, int64:
-			flag = reflect.ValueOf(value).Int() == 1
-		case uint, uint8, uint16, uint32, uint64:
-			flag = reflect.ValueOf(value).Uint() == 1
+		v := reflect.ValueOf(value)
+		switch v.Kind() {
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			flag = v.Int() == 1
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+			flag = v.Uint() == 1
 		default:
 			return ""
 		}
@@ -222,13 +223,14 @@ var GtfFuncMap = template.FuncMap{
 
 		var size float64
 
-		switch value.(type) {
-		case int, int8, int16, int32, int64:
-			size = float64(reflect.ValueOf(value).Int())
-		case uint, uint8, uint16, uint32, uint64:
-			size = float64(reflect.ValueOf(value).Uint())
-		case float32, float64:
-			size = reflect.ValueOf(value).Float()
+		v := reflect.ValueOf(value)
+		switch v.Kind() {
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			size = float64(v.Int())
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+			size = float64(v.Uint())
+		case reflect.Float32, reflect.Float64:
+			size = v.Float()
 		default:
 			return ""
 		}
@@ -261,6 +263,8 @@ var GtfFuncMap = template.FuncMap{
 		return result
 	},
 	"apnumber": func(value interface{}) interface{} {
+		defer recovery()
+
 		name := [10]string{"one", "two", "three", "four", "five",
 			"six", "seven", "eight", "nine"}
 
@@ -279,6 +283,8 @@ var GtfFuncMap = template.FuncMap{
 		return value
 	},
 	"intcomma": func(value interface{}) string {
+		defer recovery()
+
 		v := reflect.ValueOf(value)
 
 		var x uint
@@ -311,6 +317,8 @@ var GtfFuncMap = template.FuncMap{
 		return result
 	},
 	"ordinal": func(value interface{}) string {
+		defer recovery()
+
 		v := reflect.ValueOf(value)
 
 		var x uint

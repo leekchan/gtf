@@ -242,7 +242,7 @@ func TestGtfFuncMap(t *testing.T) {
 
 	ParseTest(&buffer, "{{ 2 | apnumber }}", "")
 	AssertEqual(t, &buffer, "two")
-	
+
 	ParseTest(&buffer, "{{ 1000 | apnumber }}", "")
 	AssertEqual(t, &buffer, "1000")
 
