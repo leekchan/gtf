@@ -82,6 +82,10 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 * [ljust](#ljust)
 * [center](#center)
 * [filesizeformat](#filesizeformat)
+* [apnumber](#apnumber)
+* [intcomma](#intcomma)
+* [ordinal](#ordinal)
+
 
 
 #### replace
