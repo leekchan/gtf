@@ -35,10 +35,10 @@ func TestGtfFuncMap(t *testing.T) {
 
 	ParseTest(&buffer, "{{ . | default 10 }}", []int{})
 	AssertEqual(t, &buffer, "10")
-	
+
 	ParseTest(&buffer, "{{ . | default \"empty\" }}", false)
 	AssertEqual(t, &buffer, "empty")
-	
+
 	ParseTest(&buffer, "{{ . | default \"empty\" }}", 1)
 	AssertEqual(t, &buffer, "1")
 
@@ -230,4 +230,55 @@ func TestGtfFuncMap(t *testing.T) {
 
 	ParseTest(&buffer, "{{ . | filesizeformat }}", uint(500))
 	AssertEqual(t, &buffer, "500 bytes")
+
+	ParseTest(&buffer, "{{ . | apnumber }}", uint(500))
+	AssertEqual(t, &buffer, "500")
+
+	ParseTest(&buffer, "{{ . | apnumber }}", uint(7))
+	AssertEqual(t, &buffer, "seven")
+
+	ParseTest(&buffer, "{{ . | apnumber }}", int8(3))
+	AssertEqual(t, &buffer, "three")
+
+	ParseTest(&buffer, "{{ 2 | apnumber }}", "")
+	AssertEqual(t, &buffer, "two")
+	
+	ParseTest(&buffer, "{{ 1000 | apnumber }}", "")
+	AssertEqual(t, &buffer, "1000")
+
+	ParseTest(&buffer, "{{ 1000 | intcomma }}", "")
+	AssertEqual(t, &buffer, "1,000")
+
+	ParseTest(&buffer, "{{ -1000 | intcomma }}", "")
+	AssertEqual(t, &buffer, "-1,000")
+
+	ParseTest(&buffer, "{{ 1578652313 | intcomma }}", "")
+	AssertEqual(t, &buffer, "1,578,652,313")
+
+	ParseTest(&buffer, "{{ . | intcomma }}", uint64(12315358198))
+	AssertEqual(t, &buffer, "12,315,358,198")
+
+	ParseTest(&buffer, "{{ . | intcomma }}", 25.352)
+	AssertEqual(t, &buffer, "")
+
+	ParseTest(&buffer, "{{ 1 | ordinal }}", "")
+	AssertEqual(t, &buffer, "1st")
+
+	ParseTest(&buffer, "{{ 2 | ordinal }}", "")
+	AssertEqual(t, &buffer, "2nd")
+
+	ParseTest(&buffer, "{{ 3 | ordinal }}", "")
+	AssertEqual(t, &buffer, "3rd")
+
+	ParseTest(&buffer, "{{ 11 | ordinal }}", "")
+	AssertEqual(t, &buffer, "11th")
+
+	ParseTest(&buffer, "{{ 12 | ordinal }}", "")
+	AssertEqual(t, &buffer, "12th")
+
+	ParseTest(&buffer, "{{ 13 | ordinal }}", "")
+	AssertEqual(t, &buffer, "13th")
+
+	ParseTest(&buffer, "{{ 14 | ordinal }}", "")
+	AssertEqual(t, &buffer, "14th")
 }

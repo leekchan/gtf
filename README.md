@@ -388,6 +388,68 @@ Formats the value like a human readable file size.
 
 
 
+#### apnumber
+
+For numbers 1-9, returns the number spelled out. Otherwise, returns the number. 
+
+* supported value types : int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64
+
+```
+{{ value | apnumber }}
+```
+
+**Examples**
+
+1. {{ 1 | apnumber }} --> one
+1. {{ 2 | apnumber }} --> two
+1. {{ 3 | apnumber }} --> three
+1. {{ 9 | apnumber }} --> nine
+1. {{ 10 | apnumber }} --> 10
+1. {{ 1000 | apnumber }} --> 1000
+
+
+
+#### intcomma
+
+Converts an integer to a string containing commas every three digits.
+
+* supported value types : int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64
+
+```
+{{ value | intcomma }}
+```
+
+**Examples**
+
+1. {{ 1000 | intcomma }} --> 1,000
+1. {{ -1000 | intcomma }} --> -1,000
+1. {{ 1578652313 | intcomma }} --> 1,578,652,313
+
+
+
+#### ordinal
+
+Converts an integer to its ordinal as a string.
+
+* supported value types : int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64
+
+```
+{{ value | ordinal }}
+```
+
+**Examples**
+
+1. {{ 1 | ordinal }} --> 1st
+1. {{ 2 | ordinal }} --> 2nd
+1. {{ 3 | ordinal }} --> 3rd
+1. {{ 11 | ordinal }} --> 11th
+1. {{ 12 | ordinal }} --> 12th
+1. {{ 13 | ordinal }} --> 13th
+1. {{ 14 | ordinal }} --> 14th
+
+
+
+
 ## Goal
 The first goal is implementing all built-in template filters of Django & Jinja2.
 

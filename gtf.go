@@ -260,6 +260,81 @@ var GtfFuncMap = template.FuncMap{
 
 		return result
 	},
+	"apnumber": func(value interface{}) interface{} {
+		name := [10]string{"one", "two", "three", "four", "five",
+			"six", "seven", "eight", "nine"}
+
+		v := reflect.ValueOf(value)
+		switch v.Kind() {
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			if v.Int() < 10 {
+				return name[v.Int()-1]
+			}
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+			if v.Uint() < 10 {
+				return name[v.Uint()-1]
+			}
+		}
+
+		return value
+	},
+	"intcomma": func(value interface{}) string {
+		v := reflect.ValueOf(value)
+
+		var x uint
+		minus := false
+		switch v.Kind() {
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			if v.Int() < 0 {
+				minus = true
+				x = uint(-v.Int())
+			} else {
+				x = uint(v.Int())
+			}
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+			x = uint(v.Uint())
+		default:
+			return ""
+		}
+
+		var result string
+		for x >= 1000 {
+			result = fmt.Sprintf(",%03d%s", x%1000, result)
+			x /= 1000
+		}
+		result = fmt.Sprintf("%d%s", x, result)
+
+		if minus {
+			result = "-" + result
+		}
+
+		return result
+	},
+	"ordinal": func(value interface{}) string {
+		v := reflect.ValueOf(value)
+
+		var x uint
+		switch v.Kind() {
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			if v.Int() < 0 {
+				return ""
+			}
+			x = uint(v.Int())
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+			x = uint(v.Uint())
+		default:
+			return ""
+		}
+
+		suffixes := [10]string{"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"}
+
+		switch x % 100 {
+		case 11, 12, 13:
+			return fmt.Sprintf("%d%s", x, suffixes[0])
+		}
+
+		return fmt.Sprintf("%d%s", x, suffixes[x%10])
+	},
 }
 
 // gtf.New is a wrapper function of template.New(http://golang.org/pkg/text/template/#New).
