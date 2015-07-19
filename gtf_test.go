@@ -281,4 +281,13 @@ func TestGtfFuncMap(t *testing.T) {
 
 	ParseTest(&buffer, "{{ 14 | ordinal }}", "")
 	AssertEqual(t, &buffer, "14th")
+	
+	ParseTest(&buffer, "{{ -1 | ordinal }}", "")
+	AssertEqual(t, &buffer, "")
+	
+	ParseTest(&buffer, "{{ . | ordinal }}", uint(14))
+	AssertEqual(t, &buffer, "14th")
+	
+	ParseTest(&buffer, "{{ . | ordinal }}", false)
+	AssertEqual(t, &buffer, "")
 }
