@@ -53,6 +53,12 @@ func main() {
 ```
 
 
+
+## Integration
+You can use gtf with any web frameworks (revel, beego, martini, gin, etc) which use the Golang's built-in [html/template package](http://golang.org/pkg/html/template/). Calling ".Funcs(gtf.GtfFuncMap)" on [template.Template](http://golang.org/pkg/text/template/#Template) will add gtf functions to your template. I will add the detailed integration guides for each web framework soon!
+
+
+
 ## Safety
 All gtf functions have their own recovery logics. The basic behavior of the recovery logic is silently swallowing all unexpected panics. All gtf functions would not make any panics in runtime. (**Production Ready!**)
 
