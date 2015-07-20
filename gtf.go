@@ -343,6 +343,63 @@ var GtfFuncMap = template.FuncMap{
 
 		return fmt.Sprintf("%d%s", x, suffixes[x%10])
 	},
+	"first": func(value interface{}) interface{} {
+		defer recovery()
+
+		v := reflect.ValueOf(value)
+
+		switch v.Kind() {
+		case reflect.String:
+			return string([]rune(v.String())[0])
+		case reflect.Slice, reflect.Array:
+			return v.Index(0).Interface()
+		}
+
+		return ""
+	},
+	"last": func(value interface{}) interface{} {
+		defer recovery()
+
+		v := reflect.ValueOf(value)
+
+		switch v.Kind() {
+		case reflect.String:
+			str := []rune(v.String())
+			return string(str[len(str)-1])
+		case reflect.Slice, reflect.Array:
+			return v.Index(v.Len() - 1).Interface()
+		}
+
+		return ""
+	},
+	"join": func(arg string, value []string) string {
+		defer recovery()
+
+		return strings.Join(value, arg)
+	},
+	"slice": func(start int, end int, value interface{}) interface{} {
+		defer recovery()
+
+		v := reflect.ValueOf(value)
+
+		if start < 0 {
+			start = 0
+		}
+
+		switch v.Kind() {
+		case reflect.String:
+			str := []rune(v.String())
+
+			if end > len(str) {
+				end = len(str)
+			}
+
+			return string(str[start:end])
+		case reflect.Slice:
+			return v.Slice(start, end).Interface()
+		}
+		return ""
+	},
 }
 
 // gtf.New is a wrapper function of template.New(http://golang.org/pkg/text/template/#New).

@@ -91,6 +91,10 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 * [apnumber](#apnumber)
 * [intcomma](#intcomma)
 * [ordinal](#ordinal)
+* [first](#first)
+* [last](#last)
+* [join](#join)
+* [slice](#slice)
 
 
 
@@ -457,6 +461,82 @@ Converts an integer to its ordinal as a string.
 1. {{ 13 | ordinal }} --> 13th
 1. {{ 14 | ordinal }} --> 14th
 
+
+
+#### first
+
+Returns the first item in the given value.
+
+* supported value types : string, slice, array
+
+This function also supports unicode strings.
+
+```
+{{ value | first }}
+```
+
+**Examples**
+
+1. If value is the string "The go programming language", the output will be the string "T".
+1. If value is the string "안녕하세요", the output will be the string "안". (unicode)
+1. If value is the slice []string{"go", "python", "ruby"}, the output will be the string "go".
+1. If value is the array [3]string{"go", "python", "ruby"}, the output will be the string "go".
+
+
+
+#### last
+
+Returns the last item in the given value.
+
+* supported value types : string, slice, array
+
+This function also supports unicode strings.
+
+```
+{{ value | last }}
+```
+
+**Examples**
+
+1. If value is the string "The go programming language", the output will be the string "e".
+1. If value is the string "안녕하세요", the output will be the string "요". (unicode)
+1. If value is the slice []string{"go", "python", "ruby"}, the output will be the string "ruby".
+1. If value is the array [3]string{"go", "python", "ruby"}, the output will be the string "ruby".
+
+
+
+
+#### join
+
+Concatenates the given slice to create a single string. The given argument (separator) will be placed between elements in the resulting string.
+
+```
+{{ value | join " " }}
+```
+
+If value is the slice []string{"go", "python", "ruby"}, the output will be the string "go python ruby"
+
+
+
+
+#### slice
+
+Returns a slice of the given value. The first argument is the start position, and the second argument is the end position.
+
+* supported value types : string, slice
+* supported argument types : int
+
+This function also supports unicode strings.
+
+```
+{{ value | slice 0 2 }}
+```
+
+**Examples**
+
+1. If input is {{ "The go programming language" | slice 0 6 }}, the output will be "The go".
+1. If input is {{ "안녕하세요" | slice 0 2 }}, the output will be "안녕". (unicode)
+1. If input is {{ []string{"go", "python", "ruby"} | slice 0 2 }}, the output will be []string{"go", "python"}.
 
 
 

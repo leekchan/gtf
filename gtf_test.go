@@ -281,13 +281,58 @@ func TestGtfFuncMap(t *testing.T) {
 
 	ParseTest(&buffer, "{{ 14 | ordinal }}", "")
 	AssertEqual(t, &buffer, "14th")
-	
+
 	ParseTest(&buffer, "{{ -1 | ordinal }}", "")
 	AssertEqual(t, &buffer, "")
-	
+
 	ParseTest(&buffer, "{{ . | ordinal }}", uint(14))
 	AssertEqual(t, &buffer, "14th")
-	
+
 	ParseTest(&buffer, "{{ . | ordinal }}", false)
+	AssertEqual(t, &buffer, "")
+
+	ParseTest(&buffer, "{{ . | first }}", "The go programming language")
+	AssertEqual(t, &buffer, "T")
+
+	ParseTest(&buffer, "{{ . | first }}", "안녕하세요")
+	AssertEqual(t, &buffer, "안")
+
+	ParseTest(&buffer, "{{ . | first }}", []string{"go", "python", "ruby"})
+	AssertEqual(t, &buffer, "go")
+
+	ParseTest(&buffer, "{{ . | first }}", [3]string{"go", "python", "ruby"})
+	AssertEqual(t, &buffer, "go")
+
+	ParseTest(&buffer, "{{ . | first }}", false)
+	AssertEqual(t, &buffer, "")
+
+	ParseTest(&buffer, "{{ . | last }}", "The go programming language")
+	AssertEqual(t, &buffer, "e")
+
+	ParseTest(&buffer, "{{ . | last }}", "안녕하세요")
+	AssertEqual(t, &buffer, "요")
+
+	ParseTest(&buffer, "{{ . | last }}", []string{"go", "python", "ruby"})
+	AssertEqual(t, &buffer, "ruby")
+
+	ParseTest(&buffer, "{{ . | last }}", false)
+	AssertEqual(t, &buffer, "")
+
+	ParseTest(&buffer, "{{ . | join \" \" }}", []string{"go", "python", "ruby"})
+	AssertEqual(t, &buffer, "go python ruby")
+
+	ParseTest(&buffer, "{{ . | slice 0 2 }}", []string{"go", "python", "ruby"})
+	AssertEqual(t, &buffer, "[go python]")
+
+	ParseTest(&buffer, "{{ . | slice 0 6 }}", "The go programming language")
+	AssertEqual(t, &buffer, "The go")
+
+	ParseTest(&buffer, "{{ . | slice 0 2 }}", "안녕하세요")
+	AssertEqual(t, &buffer, "안녕")
+
+	ParseTest(&buffer, "{{ . | slice -10 10 }}", "안녕하세요")
+	AssertEqual(t, &buffer, "안녕하세요")
+
+	ParseTest(&buffer, "{{ . | slice 0 2 }}", false)
 	AssertEqual(t, &buffer, "")
 }
