@@ -335,4 +335,19 @@ func TestGtfFuncMap(t *testing.T) {
 
 	ParseTest(&buffer, "{{ . | slice 0 2 }}", false)
 	AssertEqual(t, &buffer, "")
+
+	ParseTest(&buffer, "{{ . | random }}", "T")
+	AssertEqual(t, &buffer, "T")
+
+	ParseTest(&buffer, "{{ . | random }}", "안")
+	AssertEqual(t, &buffer, "안")
+
+	ParseTest(&buffer, "{{ . | random }}", []string{"go"})
+	AssertEqual(t, &buffer, "go")
+
+	ParseTest(&buffer, "{{ . | random }}", [1]string{"go"})
+	AssertEqual(t, &buffer, "go")
+
+	ParseTest(&buffer, "{{ . | random }}", false)
+	AssertEqual(t, &buffer, "")
 }

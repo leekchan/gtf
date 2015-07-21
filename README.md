@@ -95,6 +95,7 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 * [last](#last)
 * [join](#join)
 * [slice](#slice)
+* [random](#random)
 
 
 
@@ -537,6 +538,29 @@ This function also supports unicode strings.
 1. If input is {{ "The go programming language" | slice 0 6 }}, the output will be "The go".
 1. If input is {{ "안녕하세요" | slice 0 2 }}, the output will be "안녕". (unicode)
 1. If input is {{ []string{"go", "python", "ruby"} | slice 0 2 }}, the output will be []string{"go", "python"}.
+
+
+
+
+#### random
+
+Returns a random item from the given value.
+
+* supported value types : string, slice, array
+
+This function also supports unicode strings.
+
+```
+{{ value | random }}
+```
+
+**Examples**
+
+1. If input is {{ "The go programming language" | random }}, the output could be "T".
+1. If input is {{ "안녕하세요" | random }}, the output could be "안". (unicode)
+1. If input is {{ []string{"go", "python", "ruby"} | random }}, the output could be "go".
+1. If input is {{ [3]string{"go", "python", "ruby"} | random }}, the output could be "go".
+
 
 
 

@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"html/template"
 	"math"
+	"math/rand"
 	"net/url"
 	"reflect"
 	"strings"
+	"time"
 )
 
 // recovery will silently swallow all unexpected panics.
@@ -398,6 +400,23 @@ var GtfFuncMap = template.FuncMap{
 		case reflect.Slice:
 			return v.Slice(start, end).Interface()
 		}
+		return ""
+	},
+	"random": func(value interface{}) interface{} {
+		defer recovery()
+
+		rand.Seed(time.Now().UTC().UnixNano())
+
+		v := reflect.ValueOf(value)
+
+		switch v.Kind() {
+		case reflect.String:
+			str := []rune(v.String())
+			return string(str[rand.Intn(len(str))])
+		case reflect.Slice, reflect.Array:
+			return v.Index(rand.Intn(v.Len())).Interface()
+		}
+
 		return ""
 	},
 }
