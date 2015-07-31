@@ -107,6 +107,64 @@ func init() {
 ```
 
 
+### [Beego](http://beego.me/) integration
+
+Add these three lines before "beego.Run()" in your main() function. This code snippet injects gtf functions into beego's FuncMap.
+
+```Go
+for k, v := range gtf.GtfFuncMap {
+    beego.AddFuncMap(k, v)
+}
+```
+
+**Full example:**
+
+```Go
+package main
+
+import (
+    "github.com/astaxie/beego"
+    "github.com/beego/i18n"
+
+    "github.com/beego/samples/WebIM/controllers"
+    
+    "github.com/leekchan/gtf"
+)
+
+const (
+    APP_VER = "0.1.1.0227"
+)
+
+func main() {
+    beego.Info(beego.AppName, APP_VER)
+
+    // Register routers.
+    beego.Router("/", &controllers.AppController{})
+    // Indicate AppController.Join method to handle POST requests.
+    beego.Router("/join", &controllers.AppController{}, "post:Join")
+
+    // Long polling.
+    beego.Router("/lp", &controllers.LongPollingController{}, "get:Join")
+    beego.Router("/lp/post", &controllers.LongPollingController{})
+    beego.Router("/lp/fetch", &controllers.LongPollingController{}, "get:Fetch")
+
+    // WebSocket.
+    beego.Router("/ws", &controllers.WebSocketController{})
+    beego.Router("/ws/join", &controllers.WebSocketController{}, "get:Join")
+
+    // Register template functions.
+    beego.AddFuncMap("i18n", i18n.Tr)
+    
+    // Register gtf functions.
+    for k, v := range gtf.GtfFuncMap {
+        beego.AddFuncMap(k, v)
+    }
+
+    beego.Run()
+}
+```
+
+
 ### Other web frameworks (TODO)
 
 I will add the detailed integration guides for other web frameworks soon!
