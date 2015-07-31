@@ -109,7 +109,7 @@ func init() {
 
 ### [Beego](http://beego.me/) integration
 
-Add these three lines before "beego.Run()" in your main() function. This code snippet injects gtf functions into beego's FuncMap.
+Add these three lines before "beego.Run()" in your main() function. This code snippet will inject gtf functions into beego's FuncMap.
 
 ```Go
 for k, v := range gtf.GtfFuncMap {
