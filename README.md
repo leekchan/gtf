@@ -67,7 +67,7 @@ You can inject gtf functions into your webframework's original FuncMap by callin
 gtf.Inject injects gtf functions into the passed FuncMap. It does not overwrite the original function which have same name as a gtf function.
 
 ```Go
-Inject(originalFuncMap) // Inject!
+Inject(originalFuncMap)
 ```
 
 #### gtf.ForceInject
@@ -75,7 +75,7 @@ Inject(originalFuncMap) // Inject!
 gtf.ForceInject injects gtf functions into the passed FuncMap. It overwrites the original function which have same name as a gtf function.
 
 ```Go
-ForceInject(originalFuncMap) // ForceInject!
+ForceInject(originalFuncMap)
 ```
 
 
@@ -85,7 +85,7 @@ gtf.Inject injects gtf functions into the passed FuncMap. It prefixes the gtf fu
 
 
 ```Go
-InjectWithPrefix(originalFuncMap, "gtf_") // InjectWithPrefix! (prefix : gtf_)
+InjectWithPrefix(originalFuncMap, "gtf_") // prefix : gtf_
 ```
 
 
