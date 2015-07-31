@@ -53,10 +53,63 @@ func main() {
 ```
 
 
-
 ## Integration
-You can use gtf with any web frameworks (revel, beego, martini, gin, etc) which use the Golang's built-in [html/template package](http://golang.org/pkg/html/template/). Calling ".Funcs(gtf.GtfFuncMap)" on [template.Template](http://golang.org/pkg/text/template/#Template) will add gtf functions to your template. I will add the detailed integration guides for each web framework soon!
 
+You can use gtf with any web frameworks (revel, beego, martini, gin, etc) which use the Golang's built-in [html/template package](http://golang.org/pkg/html/template/).
+
+
+### Injection
+
+You can inject gtf functions into your webframework's original FuncMap by calling "gtf.Inject" / "gtf.ForceInject" / "gtf.InjectWithPrefix" functions.
+
+#### gtf.Inject
+
+gtf.Inject injects gtf functions into the passed FuncMap. It does not overwrite the original function which have same name as a gtf function.
+
+```
+Inject(originalFuncMap) // Inject!
+```
+
+#### gtf.ForceInject
+
+gtf.ForceInject injects gtf functions into the passed FuncMap. It overwrites the original function which have same name as a gtf function.
+
+```
+ForceInject(originalFuncMap) // ForceInject!
+```
+
+
+#### gtf.InjectWithPrefix
+
+gtf.Inject injects gtf functions into the passed FuncMap. It prefixes the gtf functions with the specified prefix. If there are many function which have same names as the gtf functions, you can use this function to prefix the gtf functions.
+
+
+```
+InjectWithPrefix(originalFuncMap, "gtf_") // InjectWithPrefix! (prefix : gtf_)
+```
+
+
+### [Revel](http://revel.github.io/) integration
+
+Calling "gtf.Inject(revel.TemplateFuncs)" injects gtf functions into revel.TemplateFuncs. Just add this one line in init() of init.go, and use gtf functions in your templates! :)
+
+```Go
+// init.go
+
+package app
+
+import "github.com/revel/revel"
+import "github.com/leekchan/gtf"
+
+func init() {
+    gtf.Inject(revel.TemplateFuncs)
+}
+```
+
+
+### Other web frameworks (TODO)
+
+I will add the detailed integration guides for other web frameworks soon!
 
 
 ## Safety

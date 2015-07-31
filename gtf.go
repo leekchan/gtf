@@ -427,3 +427,31 @@ var GtfFuncMap = template.FuncMap{
 func New(name string) *template.Template {
 	return template.New(name).Funcs(GtfFuncMap)
 }
+
+// gtf.Inject injects gtf functions into the passed FuncMap.
+// It does not overwrite the original function which have same name as a gtf function.
+func Inject(funcs map[string]interface{}) {
+	for k, v := range GtfFuncMap {
+		if _, ok := funcs[k]; !ok {
+			funcs[k] = v
+		}
+	}
+}
+
+// gtf.ForceInject injects gtf functions into the passed FuncMap.
+// It overwrites the original function which have same name as a gtf function.
+func ForceInject(funcs map[string]interface{}) {
+	for k, v := range GtfFuncMap {
+		funcs[k] = v
+	}
+}
+
+// gtf.Inject injects gtf functions into the passed FuncMap.
+// It prefixes the gtf functions with the specified prefix.
+// If there are many function which have same names as the gtf functions,
+// you can use this function to prefix the gtf functions.
+func InjectWithPrefix(funcs map[string]interface{}, prefix string) {
+	for k, v := range GtfFuncMap {
+		funcs[prefix+k] = v
+	}
+}

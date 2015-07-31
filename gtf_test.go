@@ -2,6 +2,7 @@ package gtf
 
 import (
 	"bytes"
+	"html/template"
 	"testing"
 )
 
@@ -13,7 +14,13 @@ func AssertEqual(t *testing.T, buffer *bytes.Buffer, testString string) {
 }
 
 func ParseTest(buffer *bytes.Buffer, body string, data interface{}) {
-	tpl := New("test").Funcs(GtfFuncMap)
+	tpl := New("test")
+	tpl.Parse(body)
+	tpl.Execute(buffer, data)
+}
+
+func CustomParseTest(funcMap map[string]interface{}, buffer *bytes.Buffer, body string, data interface{}) {
+	tpl := template.New("test").Funcs(funcMap)
 	tpl.Parse(body)
 	tpl.Execute(buffer, data)
 }
@@ -350,4 +357,109 @@ func TestGtfFuncMap(t *testing.T) {
 
 	ParseTest(&buffer, "{{ . | random }}", false)
 	AssertEqual(t, &buffer, "")
+}
+
+func TestInject(t *testing.T) {
+	var buffer bytes.Buffer
+
+	var originalFuncMap = template.FuncMap{
+		// originalFuncMap is made for test purpose.
+		// It tests that Inject function does not overwrite the original functions
+		// which have same names.
+		"length": func(value interface{}) int {
+			return -1
+		},
+		"lower": func(s string) string {
+			return "foo"
+		},
+	}
+
+	CustomParseTest(originalFuncMap, &buffer, "{{ \"The Go Programming Language\" | length }}", "")
+	AssertEqual(t, &buffer, "-1")
+	CustomParseTest(originalFuncMap, &buffer, "{{ \"The Go Programming Language\" | lower }}", "")
+	AssertEqual(t, &buffer, "foo")
+
+	Inject(originalFuncMap) // Inject!
+
+	// Check if Inject function does not overwrite the original functions which have same names.
+	CustomParseTest(originalFuncMap, &buffer, "{{ \"The Go Programming Language\" | length }}", "")
+	AssertEqual(t, &buffer, "-1")
+	CustomParseTest(originalFuncMap, &buffer, "{{ \"The Go Programming Language\" | lower }}", "")
+	AssertEqual(t, &buffer, "foo")
+
+	// Now, I can use gtf functions because they are injected into originalFuncMap.
+	CustomParseTest(originalFuncMap, &buffer, "{{ . | first }}", []string{"go", "python", "ruby"})
+	AssertEqual(t, &buffer, "go")
+	CustomParseTest(originalFuncMap, &buffer, "{{ . | slice 0 6 }}", "The go programming language")
+	AssertEqual(t, &buffer, "The go")
+	CustomParseTest(originalFuncMap, &buffer, "{{ 13 | ordinal }}", "")
+	AssertEqual(t, &buffer, "13th")
+}
+
+func TestForceInject(t *testing.T) {
+	var buffer bytes.Buffer
+
+	var originalFuncMap = template.FuncMap{
+		"length": func(value interface{}) int {
+			return -1
+		},
+		"lower": func(s string) string {
+			return "foo"
+		},
+	}
+
+	CustomParseTest(originalFuncMap, &buffer, "{{ \"The Go Programming Language\" | length }}", "")
+	AssertEqual(t, &buffer, "-1")
+	CustomParseTest(originalFuncMap, &buffer, "{{ \"The Go Programming Language\" | lower }}", "")
+	AssertEqual(t, &buffer, "foo")
+
+	ForceInject(originalFuncMap) // ForceInject!
+
+	// Check if ForceInject function overwrites the original functions which have same names.
+	CustomParseTest(originalFuncMap, &buffer, "{{ \"The Go Programming Language\" | length }}", "")
+	AssertEqual(t, &buffer, "27")
+	CustomParseTest(originalFuncMap, &buffer, "{{ \"The Go Programming Language\" | lower }}", "")
+	AssertEqual(t, &buffer, "the go programming language")
+
+	// Now, I can use gtf functions because they are injected into originalFuncMap.
+	CustomParseTest(originalFuncMap, &buffer, "{{ . | first }}", []string{"go", "python", "ruby"})
+	AssertEqual(t, &buffer, "go")
+	CustomParseTest(originalFuncMap, &buffer, "{{ . | slice 0 6 }}", "The go programming language")
+	AssertEqual(t, &buffer, "The go")
+	CustomParseTest(originalFuncMap, &buffer, "{{ 13 | ordinal }}", "")
+	AssertEqual(t, &buffer, "13th")
+}
+
+func TestInjectWithPrefix(t *testing.T) {
+	var buffer bytes.Buffer
+
+	var originalFuncMap = template.FuncMap{
+		"length": func(value interface{}) int {
+			return -1
+		},
+		"lower": func(s string) string {
+			return "foo"
+		},
+	}
+
+	CustomParseTest(originalFuncMap, &buffer, "{{ \"The Go Programming Language\" | length }}", "")
+	AssertEqual(t, &buffer, "-1")
+	CustomParseTest(originalFuncMap, &buffer, "{{ \"The Go Programming Language\" | lower }}", "")
+	AssertEqual(t, &buffer, "foo")
+
+	InjectWithPrefix(originalFuncMap, "gtf_") // InjectWithPrefix! (prefix : gtf_)
+
+	// Check if Inject function does not overwrite the original functions which have same names.
+	CustomParseTest(originalFuncMap, &buffer, "{{ \"The Go Programming Language\" | length }}", "")
+	AssertEqual(t, &buffer, "-1")
+	CustomParseTest(originalFuncMap, &buffer, "{{ \"The Go Programming Language\" | lower }}", "")
+	AssertEqual(t, &buffer, "foo")
+
+	// Now, I can use gtf functions because they are injected into originalFuncMap.
+	CustomParseTest(originalFuncMap, &buffer, "{{ . | gtf_first }}", []string{"go", "python", "ruby"})
+	AssertEqual(t, &buffer, "go")
+	CustomParseTest(originalFuncMap, &buffer, "{{ . | gtf_slice 0 6 }}", "The go programming language")
+	AssertEqual(t, &buffer, "The go")
+	CustomParseTest(originalFuncMap, &buffer, "{{ 13 | gtf_ordinal }}", "")
+	AssertEqual(t, &buffer, "13th")
 }
