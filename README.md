@@ -207,6 +207,7 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 * [join](#join)
 * [slice](#slice)
 * [random](#random)
+* [striptags](#striptags)
 
 
 
@@ -671,6 +672,28 @@ This function also supports unicode strings.
 1. If input is {{ "안녕하세요" | random }}, the output could be "안". (unicode)
 1. If input is {{ []string{"go", "python", "ruby"} | random }}, the output could be "go".
 1. If input is {{ [3]string{"go", "python", "ruby"} | random }}, the output could be "go".
+
+
+
+
+#### striptags
+
+Makes all possible efforts to strip all [X]HTML tags from given value.
+
+* supported value types : string
+
+This function also supports unicode strings.
+
+```
+{{ value | striptags }}
+```
+
+**Examples**
+
+1. If input is {{ "<strong>text</strong>" | striptags }}, the output will be "text".
+1. If input is {{ "<strong><em>안녕하세요</em></strong>" | striptags }}, the output will be "안녕하세요". (unicode)
+1. If input is {{ "<a href=\"http://example.com/\">text <strong>안녕하세요</strong></a>" | striptags }}, the output will be "text 안녕하세요".
+
 
 
 

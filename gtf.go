@@ -7,9 +7,12 @@ import (
 	"math/rand"
 	"net/url"
 	"reflect"
+	"regexp"
 	"strings"
 	"time"
 )
+
+var striptagsRegexp = regexp.MustCompile("<[^>]*?>")
 
 // recovery will silently swallow all unexpected panics.
 func recovery() {
@@ -418,6 +421,9 @@ var GtfFuncMap = template.FuncMap{
 		}
 
 		return ""
+	},
+	"striptags": func(s string) string {
+		return strings.TrimSpace(striptagsRegexp.ReplaceAllString(s, ""))
 	},
 }
 
