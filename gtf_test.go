@@ -357,6 +357,15 @@ func TestGtfFuncMap(t *testing.T) {
 
 	ParseTest(&buffer, "{{ . | random }}", false)
 	AssertEqual(t, &buffer, "")
+
+	ParseTest(&buffer, "{{ . | striptags }}", "<strong>text</strong>")
+	AssertEqual(t, &buffer, "text")
+
+	ParseTest(&buffer, "{{ . | striptags }}", "<strong><em>안녕하세요</em></strong>")
+	AssertEqual(t, &buffer, "안녕하세요")
+
+	ParseTest(&buffer, "{{ . | striptags }}", "<a href=\"http://example.com/\">text <strong>안녕하세요</strong></a>")
+	AssertEqual(t, &buffer, "text 안녕하세요")
 }
 
 func TestInject(t *testing.T) {
