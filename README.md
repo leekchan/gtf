@@ -690,9 +690,9 @@ This function also supports unicode strings.
 
 **Examples**
 
-1. If input is {{ "<strong>text</strong>" | striptags }}, the output will be "text".
-1. If input is {{ "<strong><em>안녕하세요</em></strong>" | striptags }}, the output will be "안녕하세요". (unicode)
-1. If input is {{ "<a href=\"http://example.com/\">text <strong>안녕하세요</strong></a>" | striptags }}, the output will be "text 안녕하세요".
+1. If input is {{ "&lt;strong&gt;text&lt;/strong&gt;" | striptags }}, the output will be "text".
+1. If input is {{ "&lt;strong&gt;&lt;em&gt;&#50504;&#45397;&#54616;&#49464;&#50836;&lt;/em&gt;&lt;/strong&gt;" | striptags }}, the output will be "안녕하세요". (unicode)
+1. If input is {{ "&lt;a href="/link"&gt;text &lt;strong&gt;&#50504;&#45397;&#54616;&#49464;&#50836;&lt;/strong&gt;&lt;/a&gt;" | striptags }}, the output will be "text 안녕하세요".
 
 
 
