@@ -2,13 +2,14 @@ package gtf
 
 import (
 	"fmt"
-	"html/template"
+	htmlTemplate "html/template"
 	"math"
 	"math/rand"
 	"net/url"
 	"reflect"
 	"regexp"
 	"strings"
+	textTemplate "text/template"
 	"time"
 )
 
@@ -19,7 +20,7 @@ func recovery() {
 	recover()
 }
 
-var GtfFuncMap = template.FuncMap{
+var GtfTextFuncMap = textTemplate.FuncMap{
 	"replace": func(s1 string, s2 string) string {
 		defer recovery()
 
@@ -427,11 +428,13 @@ var GtfFuncMap = template.FuncMap{
 	},
 }
 
-// gtf.New is a wrapper function of template.New(http://golang.org/pkg/text/template/#New).
+var GtfFuncMap = htmlTemplate.FuncMap(GtfTextFuncMap)
+
+// gtf.New is a wrapper function of template.New(https://golang.org/pkg/html/template/#New).
 // It automatically adds the gtf functions to the template's function map
-// and returns template.Template(http://golang.org/pkg/text/template/#Template).
-func New(name string) *template.Template {
-	return template.New(name).Funcs(GtfFuncMap)
+// and returns template.Template(http://golang.org/pkg/html/template/#Template).
+func New(name string) *htmlTemplate.Template {
+	return htmlTemplate.New(name).Funcs(GtfFuncMap)
 }
 
 // gtf.Inject injects gtf functions into the passed FuncMap.

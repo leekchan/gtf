@@ -9,7 +9,7 @@ gtf is a useful set of Golang Template Functions. The goal of this project is im
 
 ### Method 1 : Uses gtf.New
 
-gtf.New is a wrapper function of [template.New](http://golang.org/pkg/text/template/#New). It automatically adds the gtf functions to the template's function map and returns [template.Template](http://golang.org/pkg/text/template/#Template).
+gtf.New is a wrapper function of [template.New](https://golang.org/pkg/html/template/#New). It automatically adds the gtf functions to the template's function map and returns [template.Template](http://golang.org/pkg/html/template/#Template).
 
 ```Go
 package main
@@ -31,7 +31,7 @@ func main() {
 
 ### Method 2 : Adds gtf functions to the existing template.
 
-You can also add the gtf functions to the existing template. Just call ".Funcs(gtf.GtfFuncMap)".
+You can also add the gtf functions to the existing template(html/template package). Just call ".Funcs(gtf.GtfFuncMap)".
 
 ```Go
 package main
@@ -39,6 +39,7 @@ package main
 import (
 	"net/http"
 	"html/template"
+	
 	"github.com/leekchan/gtf"
 )
 
@@ -49,6 +50,25 @@ func main() {
 		tpl.Execute(w, filesize)
 	})
     http.ListenAndServe(":8080", nil)
+}
+```
+
+When you use the "text/template" package, call ".Funcs(gtf.GtfTextFuncMap)".
+
+```Go
+package main
+
+import (
+	"os"
+	"text/template"
+	
+	"github.com/leekchan/gtf"
+)
+
+func main() {
+	filesize := 554832114
+	tpl, _ := template.New("test").Funcs(gtf.GtfTextFuncMap).Parse("{{ . | filesizeformat }}")
+	tpl.Execute(os.Stdout, filesize)
 }
 ```
 
