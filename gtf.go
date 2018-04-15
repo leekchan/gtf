@@ -26,6 +26,10 @@ var GtfTextFuncMap = textTemplate.FuncMap{
 
 		return strings.Replace(s2, s1, "", -1)
 	},
+	"title": func(s string) string {
+		defer recovery()
+		return strings.Title(s)
+	},
 	"default": func(arg interface{}, value interface{}) interface{} {
 		defer recovery()
 
