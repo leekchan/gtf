@@ -427,6 +427,12 @@ var GtfTextFuncMap = textTemplate.FuncMap{
 
 		return ""
 	},
+	"randomintrange": func(min, max int, value interface{}) int {
+		defer recovery()
+
+		rand.Seed(time.Now().UTC().UnixNano())
+		return rand.Intn(max-min) + min
+	},
 	"striptags": func(s string) string {
 		return strings.TrimSpace(striptagsRegexp.ReplaceAllString(s, ""))
 	},

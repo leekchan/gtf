@@ -3,12 +3,24 @@ package gtf
 import (
 	"bytes"
 	"html/template"
+	"strconv"
 	"testing"
 )
 
 func AssertEqual(t *testing.T, buffer *bytes.Buffer, testString string) {
 	if buffer.String() != testString {
 		t.Errorf("Expected %s, got %s", testString, buffer.String())
+	}
+	buffer.Reset()
+}
+
+func AssertIntInRange(t *testing.T, buffer *bytes.Buffer, min, max int) {
+	parsedInt, err := strconv.Atoi(buffer.String())
+	if err != nil {
+		t.Error(err)
+	}
+	if parsedInt < min || parsedInt > max {
+		t.Errorf("Expected to be within the range of %d and %d, got %d", min, max, parsedInt)
 	}
 	buffer.Reset()
 }
@@ -33,7 +45,7 @@ func TestGtfFuncMap(t *testing.T) {
 
 	ParseTest(&buffer, "{{ \"the go programming language\" | title }}", "")
 	AssertEqual(t, &buffer, "The Go Programming Language")
-	
+
 	ParseTest(&buffer, "{{ \"The Go Programming Language\" | default \"default value\" }}", "")
 	AssertEqual(t, &buffer, "The Go Programming Language")
 
@@ -357,6 +369,9 @@ func TestGtfFuncMap(t *testing.T) {
 
 	ParseTest(&buffer, "{{ . | random }}", [1]string{"go"})
 	AssertEqual(t, &buffer, "go")
+
+	ParseTest(&buffer, "{{ . | randomintrange 1 5 }}", false)
+	AssertIntInRange(t, &buffer, 1, 5)
 
 	ParseTest(&buffer, "{{ . | random }}", false)
 	AssertEqual(t, &buffer, "")
