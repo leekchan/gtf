@@ -696,6 +696,23 @@ This function also supports unicode strings.
 
 
 
+#### randomintrange
+
+Returns a random integer value between the first and second argument
+
+* supported value types : int
+
+```
+{{ value | randomintrange 0 5}}
+```
+
+**Examples**
+
+1. If input is {{ randomintrange 0 5 }}, the output could be "4".
+
+
+
+
 #### striptags
 
 Makes all possible efforts to strip all [X]HTML tags from given value.
