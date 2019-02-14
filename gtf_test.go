@@ -43,6 +43,9 @@ func TestGtfFuncMap(t *testing.T) {
 	ParseTest(&buffer, "{{ \"The Go Programming Language\" | replace \" \" }}", "")
 	AssertEqual(t, &buffer, "TheGoProgrammingLanguage")
 
+	ParseTest(&buffer, "{{ \"The Go Programming Language\" | findreplace \" \" \"X\" }}", "")
+	AssertEqual(t, &buffer, "TheXGoXProgrammingXLanguage")
+
 	ParseTest(&buffer, "{{ \"the go programming language\" | title }}", "")
 	AssertEqual(t, &buffer, "The Go Programming Language")
 

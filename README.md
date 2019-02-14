@@ -202,6 +202,7 @@ If a panic occurs inside a gtf function, the function will silently swallow the 
 ### Index
 
 * [replace](#replace)
+* [findreplace](#findreplace)
 * [default](#default)
 * [length](#length)
 * [lower](#lower)
@@ -242,6 +243,20 @@ Removes all values of arg from the given string.
 {{ value | replace " " }}
 ```
 If value is "The Go Programming Language", the output will be "TheGoProgrammingLanguage".
+
+
+
+#### findreplace
+
+Replaces all instances of the first argument with the second.
+
+* supported value types : string
+* supported argument types : string
+
+```
+{{ value | findreplace " " "-" }}
+```
+If value is "The Go Programming Language", the output will be "The-Go-Programming-Language".
 
 
 

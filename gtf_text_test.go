@@ -18,6 +18,9 @@ func TestTextTemplateGtfFuncMap(t *testing.T) {
 	TextTemplateParseTest(&buffer, "{{ \"The Go Programming Language\" | replace \" \" }}", "")
 	AssertEqual(t, &buffer, "TheGoProgrammingLanguage")
 
+	TextTemplateParseTest(&buffer, "{{ \"The Go Programming Language\" | findreplace \" \" \"X\" }}", "")
+	AssertEqual(t, &buffer, "TheXGoXProgrammingXLanguage")
+
 	TextTemplateParseTest(&buffer, "{{ \"The Go Programming Language\" | length }}", "")
 	AssertEqual(t, &buffer, "27")
 
